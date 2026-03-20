@@ -10,7 +10,7 @@
 # Usage: chmod +x opensuse_setup.sh && ./opensuse_setup.sh
 # =================================================================================================
 
-set -e  # Exit immediately if any command fails
+set -eo pipefail  # Exit immediately if any command or pipe fails
 
 # Colors for output
 RED='\033[0;31m'
@@ -100,11 +100,12 @@ sudo zypper in -y \
     wl-clipboard \
     thunar \
     thunar-archive-plugin \
-    xdg-desktop-portal-hyprland
+    xdg-desktop-portal-hyprland \
+    sddm
 
 # Development Patterns
 log "Installing core development patterns and dependencies..."
-sudo zypper in -t pattern devel_basis devel_C_C++ -y
+sudo zypper in -y -t pattern devel_basis devel_C_C++ --no-recommends -x subversion -x git-svn
 
 log "Installing core development packages..."
 sudo zypper in -y \
@@ -231,7 +232,7 @@ if ! command -v volta &> /dev/null; then
 fi
 
 log "Installing Node.js development tools..."
-volta run npm install -g \
+volta install \
     @google/gemini-cli \
     @marp-team/marp-cli \
     ccusage \
@@ -451,6 +452,13 @@ history() {
 
 # =============== Paths ===============
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+# =============== Volta ===============
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# =============== Rust ===============
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
 
 # =============== Editor ===============
 export VISUAL=nvim
