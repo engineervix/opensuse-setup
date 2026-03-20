@@ -377,7 +377,36 @@ fc-cache -fv
 log "Installing and configuring Starship..."
 sudo zypper in -y starship
 mkdir -p "$HOME/.config"
-starship preset catppuccin-powerline -o "$HOME/.config/starship.toml"
+
+# Kitty Configuration
+log "Configuring Kitty terminal..."
+mkdir -p "$HOME/.config/kitty"
+cat > "$HOME/.config/kitty/kitty.conf" << 'EOF'
+# ── Appearance ────────────────────────────────────────────
+font_family      JetBrainsMono Nerd Font
+font_size        14.0
+
+# ── Background ────────────────────────────────────────────
+background_opacity 0.85
+
+# ── Cursor ────────────────────────────────────────────────
+cursor_shape block
+cursor_blink_interval 0
+
+# ── Window ────────────────────────────────────────────────
+window_padding_width 10
+hide_window_decorations no
+
+# ── Shell Integration ─────────────────────────────────────
+shell_integration enabled
+
+# ── Theme ─────────────────────────────────────────────────
+# Include the Catppuccin Mocha theme downloaded below
+include mocha.conf
+EOF
+
+log "Downloading Catppuccin Mocha theme for Kitty..."
+curl -sL https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf -o "$HOME/.config/kitty/mocha.conf"
 
 # ZSH plugins (not in standard Tumbleweed repos)
 log "Installing ZSH plugins from source..."
