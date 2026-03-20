@@ -48,6 +48,7 @@ log "Cleaning up any stale repositories from previous runs..."
 sudo zypper rr brave-browser 2>/dev/null || true
 sudo zypper rr google-chrome 2>/dev/null || true
 sudo zypper rr packman 2>/dev/null || true
+sudo zypper rr packman-essentials 2>/dev/null || true
 sudo zypper rr home_megamaced 2>/dev/null || true
 
 # Refresh repositories and trust keys early
@@ -89,8 +90,8 @@ sudo zypper dup -y
 log "Installing OPI (OBS Package Installer)..."
 sudo zypper in -y opi
 
-log "Adding Packman repository (for future use / manual codec installs)..."
-sudo zypper --gpg-auto-import-keys ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman || true
+log "Adding Packman Essentials repository (recommended to prevent update conflicts)..."
+sudo zypper --gpg-auto-import-keys ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/Essentials/ packman-essentials || true
 sudo zypper ref
 
 # Core Hyprland Desktop Environment
@@ -107,7 +108,13 @@ sudo zypper in -y \
     thunar \
     thunar-archive-plugin \
     xdg-desktop-portal-hyprland \
-    sddm
+    sddm \
+    grim \
+    slurp \
+    pipewire \
+    wireplumber \
+    qt6-wayland \
+    libqt5-qtwayland
 
 # Development Patterns
 log "Installing core development patterns and dependencies..."
@@ -277,59 +284,18 @@ install_slack() {
 install_slack
 
 install_zoom() {
-    log "Installing Zoom via automated download..."
-    # Create temporary directory for zoom installer
-    local temp_dir="/tmp/zoom-installer"
-    mkdir -p "$temp_dir"
-    cd "$temp_dir" || exit
-
-    cat > package.json << 'EOF'
-{
-  "name": "zoom-downloader",
-  "version": "1.0.0",
-  "dependencies": {
-    "playwright": "^1.54.1"
-  }
-}
-EOF
-
-    cat > zoom-download.js << 'EOF'
-const { chromium } = require('playwright');
-async function downloadZoom() {
-  const browser = await chromium.launch({ headless: true });
-  const page = await browser.newPage();
-  try {
-    await page.goto('https://zoom.us/download?os=linux');
-    await page.getByRole('button', { name: 'Accept Cookies' }).click().catch(() => {});
-    await page.getByText('Please Select a Linux type').click();
-    await page.getByText('openSUSE').click();
-    await page.getByRole('button', { name: 'Download Zoom Workplace desktop app for Linux' }).click();
-    const downloadPromise = page.waitForEvent('download');
-    const download = await downloadPromise;
-    const fileName = download.suggestedFilename();
-    await download.saveAs(`./${fileName}`);
-  } catch (error) {
-    console.error('Download failed:', error);
-    process.exit(1);
-  } finally {
-    await browser.close();
-  }
-}
-downloadZoom();
-EOF
-
-    if volta run npm install && volta run npx playwright install chromium; then
-        if volta run node zoom-download.js; then
-            local rpm_file
-            rpm_file=$(find . -name "zoom_*.rpm" | head -1)
-            if [ -n "$rpm_file" ]; then
-                sudo zypper in --allow-unsigned-rpm -y "$rpm_file"
-                log "Zoom installed successfully"
-            fi
-        fi
+    log "Installing Zoom via official RPM..."
+    local rpm_url="https://zoom.us/client/latest/zoom_openSUSE_x86_64.rpm"
+    local temp_rpm="/tmp/zoom_desktop.rpm"
+    
+    info "Downloading Zoom RPM package..."
+    if curl -sL -o "$temp_rpm" "$rpm_url"; then
+        sudo zypper in --allow-unsigned-rpm -y "$temp_rpm"
+        rm -f "$temp_rpm"
+        log "Zoom installed successfully"
+    else
+        error "Failed to download Zoom"
     fi
-    cd - > /dev/null
-    rm -rf "$temp_dir"
 }
 install_zoom
 
