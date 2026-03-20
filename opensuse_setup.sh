@@ -114,7 +114,8 @@ sudo zypper in -y \
     pipewire \
     wireplumber \
     qt6-wayland \
-    libqt5-qtwayland
+    libqt5-qtwayland \
+    hyprland-devel
 
 # Development Patterns
 log "Installing core development patterns and dependencies..."
