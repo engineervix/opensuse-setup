@@ -82,10 +82,9 @@ sudo zypper dup -y
 log "Installing OPI (OBS Package Installer)..."
 sudo zypper in -y opi
 
-log "Adding Packman repository and forcing multimedia codec switch via OPI..."
-# 'opi -n packman' is the modern way to handle this, as it resolves dependency deadlocks
-# and performs the vendor switch automatically.
-sudo opi -n packman
+log "Adding Packman repository (for future use / manual codec installs)..."
+sudo zypper --gpg-auto-import-keys ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman || true
+sudo zypper ref
 
 # Core Hyprland Desktop Environment
 log "Installing Hyprland ecosystem components..."
@@ -105,7 +104,8 @@ sudo zypper in -y \
 
 # Development Patterns
 log "Installing core development patterns and dependencies..."
-sudo zypper in -y -t pattern devel_basis devel_C_C++ --no-recommends -x subversion -x git-svn
+sudo zypper addlock subversion git-svn || true
+sudo zypper in -y --no-recommends -t pattern devel_basis devel_C_C++
 
 log "Installing core development packages..."
 sudo zypper in -y \
@@ -125,14 +125,13 @@ sudo zypper in -y \
     mkcert \
     python3-devel \
     python3-pip \
-    python3-virtualenvwrapper \
+    python3-virtualenv \
     python3-wheel \
     readline-devel \
     ruby-devel \
     sqlite3-devel \
     tk-devel \
     xz-devel \
-    zlib-devel \
     python3-pipx
 
 # Essential Tools
@@ -173,17 +172,13 @@ sudo zypper in -y \
     tokei \
     transmission-gtk \
     vlc \
-    vlc-codecs \
     xclip \
     xiphos \
     xournalpp \
     yq \
     yt-dlp \
     zoxide \
-    zsh \
-    zsh-syntax-highlighting \
-    zsh-autosuggestions \
-    zsh-completions
+    zsh
 
 # Docker
 log "Installing Docker..."
@@ -343,10 +338,11 @@ if ! command -v pyenv &> /dev/null; then
     curl https://pyenv.run | bash
 fi
 
-log "Installing Poetry..."
+log "Installing Poetry and virtualenvwrapper..."
 export PATH="$PATH:$HOME/.local/bin"
 pipx ensurepath
 pipx install poetry
+pipx install virtualenvwrapper
 mkdir -p "$HOME/.zfunc/"
 poetry completions bash >> ~/.bash_completion || true
 poetry completions zsh > ~/.zfunc/_poetry || true
@@ -403,6 +399,13 @@ log "Installing and configuring Starship..."
 sudo zypper in -y starship
 mkdir -p "$HOME/.config"
 starship preset catppuccin-powerline -o "$HOME/.config/starship.toml"
+
+# ZSH plugins (not in standard Tumbleweed repos)
+log "Installing ZSH plugins from source..."
+mkdir -p "$HOME/.zsh"
+[ -d "$HOME/.zsh/zsh-syntax-highlighting" ] || git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.zsh/zsh-syntax-highlighting"
+[ -d "$HOME/.zsh/zsh-autosuggestions" ]     || git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.zsh/zsh-autosuggestions"
+[ -d "$HOME/.zsh/zsh-completions" ]         || git clone https://github.com/zsh-users/zsh-completions.git "$HOME/.zsh/zsh-completions"
 
 # ZSH configuration
 log "Configuring ZSH..."
@@ -473,7 +476,7 @@ eval "$(pyenv virtualenv-init -)"
 # =============== Virtualenvwrapper ===============
 export WORKON_HOME="$HOME/.virtualenvs"
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-for wrapper in /usr/bin/virtualenvwrapper.sh /usr/local/bin/virtualenvwrapper.sh; do
+for wrapper in /usr/bin/virtualenvwrapper.sh /usr/local/bin/virtualenvwrapper.sh "$HOME/.local/bin/virtualenvwrapper.sh"; do
     [ -f "$wrapper" ] && source "$wrapper" && break
 done
 
@@ -482,7 +485,7 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
 # =============== Completions ===============
-fpath+=~/.zfunc
+fpath=(~/.zfunc "$HOME/.zsh/zsh-completions/src" $fpath)
 export FPATH="$HOME/.local/share/eza-completions/zsh:$FPATH"
 
 # Enable completion cache
@@ -642,8 +645,8 @@ eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 
 # ============ syntax highlighting & autosuggestions =============
-[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[ -f "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+[ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
 # =============== Local / Secret Config ===============
 # Keep secrets and machine-specific config in .zshrc.local
@@ -669,7 +672,8 @@ info "  3. Set up Zsh, eza, Starship, and all development tooling"
 info "  4. Configured Docker, Node, Python, Go, and Rust"
 echo
 warn "IMPORTANT: A reboot is required to fully apply group changes (Docker) and start your new graphical session."
-info "After reboot, select 'Hyprland' from your login manager (SDDM/GDM) or launch it from the TTY."
+info "After reboot, select 'Hyprland' from your login manager (SDDM) or launch it from the TTY."
+warn "For restricted multimedia codecs (H.264, AAC, etc.), run 'sudo opi codecs' after rebooting."
 echo
 read -rp "Press Enter to reboot now, or Ctrl+C to reboot manually later..."
 sudo reboot
