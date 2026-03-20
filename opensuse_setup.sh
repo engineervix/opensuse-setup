@@ -43,6 +43,13 @@ if ! grep -qi "opensuse" /etc/os-release; then
     warn "This script is designed for openSUSE Tumbleweed. You are not on openSUSE. Proceed with caution."
 fi
 
+# Remove any stale repos from previous runs before refreshing
+log "Cleaning up any stale repositories from previous runs..."
+sudo zypper rr brave-browser 2>/dev/null || true
+sudo zypper rr google-chrome 2>/dev/null || true
+sudo zypper rr packman 2>/dev/null || true
+sudo zypper rr home_megamaced 2>/dev/null || true
+
 # Refresh repositories and trust keys early
 log "Refreshing repositories and trusting GPG keys..."
 sudo zypper --gpg-auto-import-keys ref
@@ -191,17 +198,22 @@ log "Installing Browsers..."
 sudo zypper in -y chromium
 # Google Chrome
 sudo rpm --import https://dl-ssl.google.com/linux/linux_signing_key.pub
-sudo zypper --gpg-auto-import-keys ar -f http://dl.google.com/linux/chrome/rpm/stable/x86_64 google-chrome || true
+sudo zypper rr google-chrome 2>/dev/null || true
+sudo zypper --gpg-auto-import-keys ar -f http://dl.google.com/linux/chrome/rpm/stable/x86_64 google-chrome
+sudo zypper ref
 sudo zypper in -y google-chrome-stable
 # Brave
 sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-sudo zypper --gpg-auto-import-keys ar -f https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo brave-browser || true
+sudo zypper rr brave-browser 2>/dev/null || true
+sudo zypper --gpg-auto-import-keys ar -f https://brave-browser-rpm-release.s3.brave.com/x86_64 brave-browser
+sudo zypper ref
 sudo zypper in -y brave-browser
 
 # Spotify & Bruno (Native RPMs)
 log "Installing Spotify and Bruno natively..."
 # Spotify (via spotify-easyrpm)
-sudo zypper --gpg-auto-import-keys ar -cfp 90 https://download.opensuse.org/repositories/home:megamaced/openSUSE_Tumbleweed/home:megamaced.repo || true
+sudo zypper rr home_megamaced 2>/dev/null || true
+sudo zypper --gpg-auto-import-keys ar -cfp 90 https://download.opensuse.org/repositories/home:megamaced/openSUSE_Tumbleweed/home:megamaced.repo
 sudo zypper ref
 sudo zypper in -y spotify-easyrpm
 # We trigger the RPM build but non-interactively if possible, or just let the user know
