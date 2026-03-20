@@ -79,21 +79,13 @@ log "Updating system packages..."
 sudo zypper dup -y
 
 # Setup Packman & OPI
-log "Adding Packman repository and updating multimedia codecs..."
-if ! zypper lr | grep -q 'packman'; then
-    sudo zypper --gpg-auto-import-keys ar -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
-fi
-sudo zypper --gpg-auto-import-keys ref
-
 log "Installing OPI (OBS Package Installer)..."
 sudo zypper in -y opi
 
-log "Forcing multimedia codec switch to Packman (resolving mini-libs deadlock)..."
-# We explicitly install the full versions to force the vendor change
-sudo zypper --non-interactive in -y --from packman ffmpeg gstreamer-plugins-bad gstreamer-plugins-libav gstreamer-plugins-ugly vlc-codecs --allow-vendor-change
-
-log "Performing full vendor-change upgrade to Packman..."
-sudo zypper --non-interactive dup --from packman --allow-vendor-change --allow-downgrade -y
+log "Adding Packman repository and forcing multimedia codec switch via OPI..."
+# 'opi -n packman' is the modern way to handle this, as it resolves dependency deadlocks
+# and performs the vendor switch automatically.
+sudo opi -n packman
 
 # Core Hyprland Desktop Environment
 log "Installing Hyprland ecosystem components..."
@@ -104,7 +96,7 @@ sudo zypper in -y \
     kitty \
     dunst \
     hyprpaper \
-    polkit-kde-agent-1 \
+    polkit-kde-agent-6 \
     wl-clipboard \
     thunar \
     thunar-archive-plugin \
@@ -140,7 +132,7 @@ sudo zypper in -y \
     tk-devel \
     xz-devel \
     zlib-devel \
-    pipx
+    python3-pipx
 
 # Essential Tools
 log "Installing utilities and applications..."
@@ -149,7 +141,6 @@ sudo zypper in -y \
     bat \
     btop \
     cifs-utils \
-    db-browser-for-sqlite \
     duf \
     easyeffects \
     eza \
