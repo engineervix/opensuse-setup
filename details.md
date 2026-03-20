@@ -17,6 +17,7 @@ Unlike GNOME's "all-in-one" approach, this setup uses modular Wayland components
 | **Auth Agent**    | `polkit-kde-agent-1`    | Handles GUI root authentication prompts.                      |
 | **File Manager**  | `thunar`                | Lightweight XFCE file manager with bulk-renaming.             |
 | **Clipboard**     | `wl-clipboard`, `xclip` | Wayland and X11 clipboard management.                         |
+| **Screen Sharing**| `grim`, `slurp`, etc.   | Region selection and Wayland video routing dependencies.      |
 
 ## 🛠️ Development Tooling
 
@@ -67,7 +68,7 @@ The script installs a comprehensive suite of modern and essential tools:
 - **Browsers:** Chromium, Google Chrome (official repo), Brave (official repo).
 - **Communication:** Slack, Zoom.
 - **Media:** 
-  - VLC (with Packman codecs).
+  - VLC (with Packman Essentials codecs).
   - Spotify (Native RPM via `spotify-easyrpm`).
   - Audacity, yt-dlp.
   - EasyEffects (Native RPM from official repos).
