@@ -51,7 +51,7 @@ pipx ensurepath
 pipx install poetry
 pipx install virtualenvwrapper
 mkdir -p "$HOME/.zfunc/"
-poetry completions bash >> ~/.bash_completion || true
+grep -qF '_poetry' ~/.bash_completion 2>/dev/null || poetry completions bash >> ~/.bash_completion || true
 poetry completions zsh > ~/.zfunc/_poetry || true
 
 # Go
