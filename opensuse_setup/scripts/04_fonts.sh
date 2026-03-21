@@ -27,13 +27,12 @@ if [ ! -f "$HOME/.local/share/fonts/FantasqueSansMono Nerd Font Regular.ttf" ]; 
     rm -rf /tmp/FantasqueSansMono*
 fi
 
-# Cascadia Code
-if [ ! -f "$HOME/.local/share/fonts/CascadiaCode-Regular.ttf" ]; then
-    info "Downloading CascadiaCode Nerd Font..."
-    wget -qO /tmp/CascadiaCode.zip https://github.com/microsoft/cascadia-code/releases/download/v2407.24/CascadiaCode-2407.24.zip
+# Cascadia Code (Nerd Font patched variant — "CaskaydiaCode" in nerd-fonts)
+if [ ! -f "$HOME/.local/share/fonts/CaskaydiaCodeNerdFont-Regular.ttf" ]; then
+    info "Downloading CaskaydiaCode Nerd Font..."
+    wget -qO /tmp/CascadiaCode.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/CascadiaCode.zip
     unzip -q /tmp/CascadiaCode.zip -d /tmp/CascadiaCode/
-    cp /tmp/CascadiaCode/ttf/*.ttf "$HOME/.local/share/fonts/"
-    cp /tmp/CascadiaCode/ttf/static/*.ttf "$HOME/.local/share/fonts/"
+    cp /tmp/CascadiaCode/*.ttf "$HOME/.local/share/fonts/"
     rm -rf /tmp/CascadiaCode*
 fi
 
