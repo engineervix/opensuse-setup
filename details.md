@@ -1,6 +1,6 @@
 # openSUSE Tumbleweed + Hyprland: Setup Details
 
-This document outlines the specific packages, configurations, and architectural choices made during the port from Fedora GNOME to openSUSE Tumbleweed with Hyprland.
+This document outlines the specific packages, configurations, and architectural choices made during the switch from Fedora GNOME to openSUSE Tumbleweed with Hyprland.
 
 ## 🖥️ Graphical Environment (The "Hyprland Ecosystem")
 
