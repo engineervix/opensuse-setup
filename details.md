@@ -8,16 +8,14 @@ Unlike GNOME's "all-in-one" approach, this setup uses modular Wayland components
 
 | Component         | Choice                  | Description                                                   |
 | :---------------- | :---------------------- | :------------------------------------------------------------ |
-| **Compositor**    | `hyprland`              | Dynamic tiling Wayland compositor.                            |
+| **Compositor**    | `hyprland`              | Dynamic tiling Wayland compositor. |
+| **Critical Asset**| `hyprland-qtutils`      | Suppresses missing asset warnings when disabling standard zypper recommendations. |
+| **Display Mgr**   | `sddm-qt6`              | Wayland-native display manager, replacing legacy sddm (Qt5).  |
 | **Status Bar**    | `waybar`                | Highly customizable GTK bar.                                  |
 | **App Launcher**  | `rofi-wayland`          | Application runner and menu system.                           |
-| **Terminal**      | `kitty`                 | GPU-accelerated terminal (Chosen for stability over Ghostty). |
-| **Notifications** | `dunst`                 | Lightweight notification daemon.                              |
-| **Wallpaper**     | `hyprpaper`             | Minimalist Wayland wallpaper utility.                         |
-| **Auth Agent**    | `polkit-kde-agent-1`    | Handles GUI root authentication prompts.                      |
-| **File Manager**  | `thunar`                | Lightweight XFCE file manager with bulk-renaming.             |
-| **Clipboard**     | `wl-clipboard`, `xclip` | Wayland and X11 clipboard management.                         |
-| **Screen Sharing**| `grim`, `slurp`, etc.   | Region selection and Wayland video routing dependencies.      |
+| **Logout Menu**   | `wlogout`               | Highly customizable Wayland logout menu.                      |
+| **Terminal**      | `kitty`                 | GPU-accelerated terminal. Static config managed in `conf/`. |
+| **Night Light**   | `hyprsunset`            | Native Wayland blue-light filter.                             |
 
 ## 🛠️ Development Tooling
 
@@ -87,7 +85,9 @@ The script installs a comprehensive suite of modern and essential tools:
 - **API Client:** Bruno (Native RPM from official GitHub).
 
 ## 📂 Key File Locations
-- **Main Script:** `opensuse_setup.sh`
+- **Main Entrypoint:** `opensuse_setup/install.sh`
+- **Setup Modules:** `opensuse_setup/scripts/` (Sequence: 01_system, 02_packages, 03_tooling, 04_fonts, 05_terminal)
+- **Static Configurations:** `opensuse_setup/conf/`
 - **Neovim Config:** `~/.config/nvim/`
 - **Waybar Config:** `~/.config/waybar/` (Requires user customization post-install)
 - **Hyprland Config:** `~/.config/hypr/` (Requires user customization post-install)

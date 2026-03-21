@@ -30,7 +30,7 @@ Automated setup scripts for Fedora and openSUSE Tumbleweed, configuring a comple
 A two-part setup for Fedora 42/43 Workstation. It optimizes DNF, configures GNOME shell tweaks, and installs a comprehensive set of development libraries and GNOME-specific utilities.
 
 ### openSUSE Tumbleweed (Hyprland)
-A single-script unified setup for a minimal Tumbleweed installation (Netinstall). It swaps GNOME for a modular Wayland environment using:
+A modular script architecture specifically designed for a minimal Tumbleweed installation (Generic Desktop system role). It establishes a pure Wayland development environment using:
 - **Compositor:** Hyprland
 - **Status Bar:** Waybar
 - **Launcher:** Rofi-Wayland
@@ -79,10 +79,11 @@ chmod +x fedora_setup_part1.sh fedora_setup_part2.sh
 ```
 
 ### openSUSE Setup
-The openSUSE setup is a single unified script.
+The openSUSE setup is broken down into modular phases (System, Packages, Tooling, Fonts, Terminal) driven by a single entry point.
 ```bash
-chmod +x opensuse_setup.sh
-./opensuse_setup.sh
+cd opensuse_setup
+chmod +x install.sh scripts/*.sh
+./install.sh
 ```
 
 ## Post-Installation
