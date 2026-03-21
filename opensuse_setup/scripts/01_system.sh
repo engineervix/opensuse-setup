@@ -35,6 +35,18 @@ DNS=1.1.1.2#security.cloudflare-dns.com 1.0.0.2#security.cloudflare-dns.com 2606
 DNSOverTLS=yes
 EOF
     sudo systemctl enable --now systemd-resolved
+
+    # Point resolv.conf at the stub resolver so applications actually use systemd-resolved
+    sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+    # Tell NetworkManager to hand off DNS to systemd-resolved
+    sudo mkdir -p /etc/NetworkManager/conf.d
+    sudo tee /etc/NetworkManager/conf.d/dns.conf > /dev/null << 'EOF'
+[main]
+dns=systemd-resolved
+EOF
+    sudo systemctl reload NetworkManager 2>/dev/null || true
+
     log "DNS over TLS configured with Cloudflare's security-focused DNS servers"
 }
 setup_dns
