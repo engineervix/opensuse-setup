@@ -27,7 +27,6 @@ setopt histignorealldups
 setopt histignoredups
 setopt histignorespace
 setopt histreduceblanks
-setopt histsavenodups
 
 history() {
     if [[ $# -eq 0 ]]; then
