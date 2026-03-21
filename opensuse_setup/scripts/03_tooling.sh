@@ -19,6 +19,7 @@ if ! command -v volta &> /dev/null; then
 fi
 
 log "Installing Node.js development tools..."
+if ! volta list 2>/dev/null | grep -q 'prettier'; then
 volta install \
     @google/gemini-cli \
     @marp-team/marp-cli \
@@ -38,6 +39,7 @@ volta install \
     stylelint \
     svgo \
     typescript
+fi
 
 # Python
 log "Installing pyenv for Python version management..."
