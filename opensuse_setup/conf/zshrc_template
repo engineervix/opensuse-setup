@@ -180,8 +180,8 @@ tar_max() {
 }
 
 grep_this() {
-  grep --color -inrw . -e "$1"
-  echo "Matches: $(grep -inrw . -e "$1" | wc -l)"
+  command grep --color -inrw . -e "$1"
+  echo "Matches: $(command grep -inrw . -e "$1" | wc -l)"
 }
 
 mkdir_date() {
@@ -189,7 +189,7 @@ mkdir_date() {
 }
 
 kill_spaces() {
-  find . -name "*.$1" -type f -print0 | while IFS= read -r -d $'\0' f; do mv -v "$f" "${f// /_}"; done
+  command find . -name "*.$1" -type f -print0 | while IFS= read -r -d $'\0' f; do mv -v "$f" "${f// /_}"; done
 }
 
 # PDF Management
@@ -206,9 +206,9 @@ split_pdf() {
 }
 
 grep_pdf() {
-  find . -iname '*.pdf' | while read filename
+  command find . -iname '*.pdf' | while IFS= read -r filename
   do
-    pdftotext -enc Latin1 "$filename" - | grep --with-filename --label="$filename" --color -i "$1"
+    pdftotext -enc Latin1 "$filename" - | command grep --with-filename --label="$filename" --color -i "$1"
   done
 }
 
