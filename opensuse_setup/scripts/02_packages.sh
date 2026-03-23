@@ -134,6 +134,15 @@ sudo zypper in -y \
     zoxide \
     zsh
 
+# Configure git to use git-delta
+# https://github.com/dandavison/delta
+log "Configuring git with git-delta..."
+git config --global core.pager delta
+git config --global interactive.diffFilter 'delta --color-only'
+git config --global delta.navigate true
+git config --global delta.dark true  # or `delta.light true`, or omit for auto-detection
+git config --global merge.conflictStyle zdiff3
+
 # Docker
 log "Installing Docker..."
 sudo zypper in -y docker docker-compose
