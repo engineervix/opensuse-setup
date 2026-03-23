@@ -4,13 +4,15 @@ on:
   push:
     branches: [main]
     paths:
-      - "**.sh"
+      - "install.sh"
+      - "scripts/*.sh"
       - ".github/workflows/main.yml"
       - ".shellcheckrc"
   pull_request:
     branches: [main]
     paths:
-      - "**.sh"
+      - "install.sh"
+      - "scripts/*.sh"
       - ".github/workflows/main.yml"
       - ".shellcheckrc"
   workflow_dispatch:
