@@ -29,13 +29,18 @@ sudo zypper in -y \
     grim \
     slurp \
     pipewire \
+    pipewire-pulseaudio \
     wireplumber \
     pavucontrol \
     qt6-wayland \
     libqt5-qtwayland \
     NetworkManager-connection-editor \
     libnotify-tools \
-    hyprland-devel
+    hyprland-devel \
+    adwaita-qt6 \
+    papirus-icon-theme \
+    qt6-multimedia-imports \
+    qt6ct
 
 # Development Patterns
 log "Installing core development patterns and dependencies..."
@@ -54,35 +59,45 @@ sudo zypper in -y \
     libffi-devel \
     libpcap-devel \
     postgresql-devel \
+    postgresql-server-devel \
+    libpqxx-devel \
     libyaml-devel \
     ncurses-devel \
     libopenssl-devel \
+    libstdc++-devel \
     mkcert \
+    patchelf \
     python3-devel \
     python3-pip \
+    python3-pipx \
     python3-virtualenv \
     python3-wheel \
     readline-devel \
     ruby-devel \
     sqlite3-devel \
     tk-devel \
-    xz-devel \
-    python3-pipx
+    xz-devel
 
 # Essential Tools
 log "Installing utilities and applications..."
 sudo zypper in -y \
     audacity \
+    blueman \
     bat \
     btop \
     cifs-utils \
+    cliphist \
+    d2 \
     duf \
+    engrampa \
     easyeffects \
     eza \
     fd \
     ffmpeg \
     fzf \
     gimp \
+    imv \
+    keychain \
     git \
     git-delta \
     gh \
@@ -96,6 +111,7 @@ sudo zypper in -y \
     lazygit \
     libva-utils \
     libreoffice \
+    libreoffice-gtk3 \
     meld \
     ncdu \
     okular \
@@ -104,6 +120,7 @@ sudo zypper in -y \
     ripgrep \
     screenkey \
     ShellCheck \
+    socat \
     sqlitebrowser \
     tmux \
     tokei \
@@ -123,6 +140,17 @@ sudo zypper in -y docker docker-compose
 sudo systemctl enable --now docker
 sudo usermod -aG docker "$USER"
 
+# Enable PipeWire
+log "Enabling PipeWire audio..."
+# systemctl --user enable --now pipewire-pulse
+# --user systemctl in a script running as root or early in setup can be tricky, so we wrap it:
+sudo -u "$USER" systemctl --user enable --now pipewire-pulse 2>/dev/null || \
+    info "PipeWire pulse will be enabled on next login"
+
+# Bluetooth
+log "Enabling Bluetooth..."
+sudo systemctl enable --now bluetooth
+
 # Browsers
 log "Installing Browsers..."
 sudo zypper in -y chromium
@@ -141,9 +169,8 @@ sudo zypper --gpg-auto-import-keys ar -f https://brave-browser-rpm-release.s3.br
 sudo zypper ref
 sudo zypper in -y brave-browser
 
-# Spotify & Bruno (Native RPMs)
-log "Installing Spotify and Bruno natively..."
 # Spotify (via spotify-easyrpm)
+log "Installing Spotify..."
 sudo zypper rr home_megamaced 2>/dev/null || true
 sudo zypper --gpg-auto-import-keys ar -cfp 90 https://download.opensuse.org/repositories/home:megamaced/openSUSE_Tumbleweed/home:megamaced.repo
 sudo zypper ref
@@ -158,7 +185,14 @@ wget -qO /tmp/bruno.rpm "https://github.com/usebruno/bruno/releases/download/$BR
 sudo zypper in -y /tmp/bruno.rpm
 rm -f /tmp/bruno.rpm
 
-# Communication tools (Slack, Zoom)
+# Fix Bruno for Wayland
+log "Patching Bruno desktop entry for Wayland..."
+mkdir -p "$HOME/.local/share/applications"
+sed 's|Exec=/opt/Bruno/bruno %U|Exec=/opt/Bruno/bruno --ozone-platform=wayland %U|' \
+    /usr/share/applications/bruno.desktop \
+    > "$HOME/.local/share/applications/bruno.desktop"
+
+# Communication tools
 install_slack() {
     log "Starting Slack installation..."
     local download_url
@@ -175,19 +209,3 @@ install_slack() {
     fi
 }
 install_slack
-
-install_zoom() {
-    log "Installing Zoom via official RPM..."
-    local rpm_url="https://zoom.us/client/latest/zoom_openSUSE_x86_64.rpm"
-    local temp_rpm="/tmp/zoom_desktop.rpm"
-    
-    info "Downloading Zoom RPM package..."
-    if curl -sL -o "$temp_rpm" "$rpm_url"; then
-        sudo zypper in --allow-unsigned-rpm -y "$temp_rpm"
-        rm -f "$temp_rpm"
-        log "Zoom installed successfully"
-    else
-        error "Failed to download Zoom"
-    fi
-}
-install_zoom

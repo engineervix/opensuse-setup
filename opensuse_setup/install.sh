@@ -65,6 +65,7 @@ echo
 warn "IMPORTANT: A reboot is required to fully apply group changes (Docker) and start your new graphical session."
 info "After reboot, select 'Hyprland' from your login manager (SDDM) or launch it from the TTY."
 warn "For restricted multimedia codecs (H.264, AAC, etc.), run 'sudo opi codecs' after rebooting."
+warn "SELinux & Docker volumes: If containers can't access mounted volumes, run 'chcon -R -t container_file_t .' in the project directory"
 echo
 read -rp "Press Enter to reboot now, or Ctrl+C to reboot manually later..."
 sudo reboot

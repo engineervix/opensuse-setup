@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
 # Script: 01_system.sh
-# Description: Handles base system configuration, repository management, 
+# Description: Handles base system configuration, repository management,
 #              DNS setup, and system updates.
 # =============================================================================
 
@@ -21,8 +21,15 @@ sudo zypper --gpg-auto-import-keys ref
 
 # Set hostname
 log "Let's set up a new hostname"
-read -rp 'hostname: ' myhostname 
+read -rp 'hostname: ' myhostname
 sudo hostnamectl set-hostname "$myhostname"
+
+# Configure Git identity
+log "Configuring Git identity..."
+read -rp 'Git full name: ' git_name
+read -rp 'Git email: ' git_email
+git config --global user.name "$git_name"
+git config --global user.email "$git_email"
 
 # Configure DNS over TLS for better privacy
 setup_dns() {

@@ -38,6 +38,10 @@ history() {
 
 # =============== Paths ===============
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$PATH:/usr/sbin"
+
+# =============== SSH Agent ===============
+eval `keychain --eval --quiet ~/.ssh/id_ed25519 ~/.ssh/id_rsa`
 
 # =============== Volta ===============
 export VOLTA_HOME="$HOME/.volta"
@@ -58,10 +62,8 @@ eval "$(pyenv virtualenv-init -)"
 
 # =============== Virtualenvwrapper ===============
 export WORKON_HOME="$HOME/.virtualenvs"
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-for wrapper in /usr/bin/virtualenvwrapper.sh /usr/local/bin/virtualenvwrapper.sh "$HOME/.local/bin/virtualenvwrapper.sh"; do
-    [ -f "$wrapper" ] && source "$wrapper" && break
-done
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.13
+source /usr/bin/virtualenvwrapper-3.13
 
 # =============== Go ===============
 export GOPATH=$HOME/go
@@ -143,6 +145,17 @@ alias gp='git push'
 alias glog='git log --oneline --decorate --graph'
 alias glol='git log --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"'
 
+# ggp - push current branch to origin with flexibility
+function ggp() {
+  if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then
+    git push origin "${*}"
+  else
+    [[ "$#" == 0 ]] && local b="$(git_current_branch)"
+    git push origin "${b:=$1}"
+  fi
+}
+compdef _git ggp=git-checkout
+
 # Docker Aliases
 alias dco="docker compose"
 alias dps='docker ps'
@@ -210,6 +223,11 @@ grep_pdf() {
   do
     pdftotext -enc Latin1 "$filename" - | command grep --with-filename --label="$filename" --color -i "$1"
   done
+}
+
+# check python version in pyproject.toml
+py_version() {
+    yq '.tool.poetry.dependencies.python' pyproject.toml
 }
 
 function add_nodemodules_bin() {

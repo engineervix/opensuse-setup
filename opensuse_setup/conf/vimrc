@@ -1,0 +1,129 @@
+" Essential Vim Configuration
+set nocompatible
+filetype off
+
+" Plugins via vim-plug
+call plug#begin('~/.vim/plugged')
+
+" File explorer
+Plug 'preservim/nerdtree'
+
+" Fuzzy finder
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" Status line
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Git integration
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" Syntax highlighting and language support
+Plug 'sheerun/vim-polyglot'
+
+" Auto-completion
+Plug 'ycm-core/YouCompleteMe', { 'do': './install.py' }
+
+" Color schemes
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+
+" Useful utilities
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+
+" LSP support for Python, Go, etc.
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'  " Auto-install language servers
+
+" Better terminal integration
+Plug 'voldikss/vim-floaterm'
+
+" Django-specific
+Plug 'tweekmonster/django-plus.vim'
+
+" Go development
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+Plug 'wakatime/vim-wakatime'
+
+call plug#end()
+
+" Basic settings
+filetype plugin indent on
+syntax enable
+
+" Enable true colors support (required for Catppuccin)
+set termguicolors
+
+" Theme - with fallback if catppuccin_mocha isn't installed yet
+try
+    set background=dark
+    colorscheme catppuccin_mocha
+    let g:airline_theme='catppuccin_mocha'
+catch /^Vim\%((\a\+)\)\=:E185/
+    " Fallback to default if catppuccin_mocha not available
+    colorscheme default
+    let g:airline_theme='dark'
+endtry
+
+" General settings
+set number
+set relativenumber
+set cursorline
+set showmatch
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+set autoindent
+set smartindent
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set scrolloff=8
+set sidescrolloff=8
+set wrap
+set linebreak
+set mouse=a
+" set clipboard=unnamedplus
+set backspace=indent,eol,start
+set wildmenu
+set wildmode=longest:full,full
+set splitbelow
+set splitright
+set laststatus=2
+set encoding=utf-8
+
+" Disable backup files (optional)
+set nobackup
+set nowritebackup
+set noswapfile
+
+" Set leader key for future customization
+let mapleader = " "
+
+" Terminal toggle
+nnoremap <leader>t :FloatermToggle<CR>
+
+" FZF shortcuts (you already have fzf)
+nnoremap <leader>ff :Files<CR>
+nnoremap <leader>fg :Rg<CR>
+nnoremap <leader>fb :Buffers<CR>
+
+" LSP shortcuts
+nnoremap gd :LspDefinition<CR>
+nnoremap gr :LspReferences<CR>
+nnoremap K :LspHover<CR>
+
+" Plugin-specific settings
+let g:NERDTreeShowHidden=1
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+
+" Auto-commands
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
