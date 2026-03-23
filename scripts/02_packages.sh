@@ -96,6 +96,7 @@ sudo zypper in -y \
     ffmpeg \
     fzf \
     gimp \
+    gpu-screen-recorder \
     imv \
     keychain \
     git \
