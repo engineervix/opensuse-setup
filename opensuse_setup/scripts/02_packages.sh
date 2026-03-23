@@ -12,7 +12,7 @@ sudo zypper in -y \
     hyprland \
     hyprland-qtutils \
     waybar \
-    rofi-wayland \
+    rofi \
     kitty \
     dunst \
     hyprpaper \

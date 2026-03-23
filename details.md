@@ -12,7 +12,7 @@ Unlike GNOME's "all-in-one" approach, this setup uses modular Wayland components
 | **Critical Asset**| `hyprland-qtutils`      | Suppresses missing asset warnings when disabling standard zypper recommendations. |
 | **Display Mgr**   | `sddm-qt6`              | Wayland-native display manager, replacing legacy sddm (Qt5).  |
 | **Status Bar**    | `waybar`                | Highly customizable GTK bar.                                  |
-| **App Launcher**  | `rofi-wayland`          | Application runner and menu system.                           |
+| **App Launcher**  | `rofi`                  | Application runner and menu system (native Wayland support since 2025). |
 | **Logout Menu**   | `wlogout`               | Highly customizable Wayland logout menu.                      |
 | **Terminal**      | `kitty`                 | GPU-accelerated terminal. Static config managed in `conf/`. |
 | **Night Light**   | `hyprsunset`            | Native Wayland blue-light filter.                             |

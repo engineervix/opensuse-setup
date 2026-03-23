@@ -10,7 +10,7 @@ A modular script architecture designed for a minimal Tumbleweed installation (Ge
 | :--- | :--- |
 | **Compositor** | Hyprland |
 | **Status Bar** | Waybar |
-| **Launcher** | Rofi-Wayland |
+| **Launcher** | Rofi |
 | **Terminal** | Kitty |
 | **Editor** | Neovim (Kickstart-based) |
 
