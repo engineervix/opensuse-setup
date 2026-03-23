@@ -48,6 +48,7 @@ source "${SCRIPT_DIR}/scripts/02_packages.sh"
 source "${SCRIPT_DIR}/scripts/03_tooling.sh"
 source "${SCRIPT_DIR}/scripts/04_fonts.sh"
 source "${SCRIPT_DIR}/scripts/05_terminal.sh"
+source "${SCRIPT_DIR}/scripts/06_dotfiles.sh"
 
 # Cleanup
 log "Cleaning up package cache..."
@@ -61,6 +62,7 @@ info "  1. Installed Hyprland, Waybar, Rofi, and Kitty"
 info "  2. Cloned your custom Neovim setup (kickstart.nvim, custom branch)"
 info "  3. Set up Zsh, eza, Starship, and all development tooling"
 info "  4. Configured Docker, Node, Python, Go, and Rust"
+info "  5. Cloned dotfiles and set up ~/.config symlinks"
 echo
 warn "IMPORTANT: A reboot is required to fully apply group changes (Docker) and start your new graphical session."
 info "After reboot, select 'Hyprland' from your login manager (SDDM) or launch it from the TTY."
