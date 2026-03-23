@@ -84,9 +84,9 @@ The script installs a comprehensive suite of modern and essential tools:
 - **API Client:** Bruno (Native RPM from official GitHub).
 
 ## 📂 Key File Locations
-- **Main Entrypoint:** `opensuse_setup/install.sh`
-- **Setup Modules:** `opensuse_setup/scripts/` (Sequence: 01_system, 02_packages, 03_tooling, 04_fonts, 05_terminal, 06_dotfiles)
-- **Static Configurations:** `opensuse_setup/conf/` (fallbacks for kitty and vim, used if dotfiles are not set up)
+- **Main Entrypoint:** `install.sh`
+- **Setup Modules:** `scripts/` (Sequence: 01_system, 02_packages, 03_tooling, 04_fonts, 05_terminal, 06_dotfiles)
+- **Static Configurations:** `conf/` (fallbacks for kitty and vim, used if dotfiles are not set up)
 - **Dotfiles Repository:** `~/dotfiles/` (cloned during phase 6; owns `~/.config/hypr`, `~/.config/waybar`, `~/.config/kitty`, etc. via symlinks)
 - **Neovim Config:** `~/.config/nvim/` (independent repo — `engineervix/kickstart.nvim`, branch `custom`)
 - **Zsh Config:** `~/.zshrc` (includes a robust set of Git and Docker aliases)

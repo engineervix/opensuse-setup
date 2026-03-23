@@ -157,14 +157,15 @@ if vim --not-a-term -c 'PlugInstall --sync | qa!' > /tmp/vim-plug-install.log 2>
     # Check if YouCompleteMe needs manual compilation (fallback)
     if [ -d "$HOME/.vim/plugged/YouCompleteMe" ] && [ ! -f "$HOME/.vim/plugged/YouCompleteMe/third_party/ycmd/ycm_core.so" ]; then
         log "Compiling YouCompleteMe manually..."
-        cd "$HOME/.vim/plugged/YouCompleteMe"
-        if python3 install.py > /tmp/ycm-install.log 2>&1; then
-            log "YouCompleteMe compiled successfully"
-        else
-            warn "YouCompleteMe compilation had issues - check /tmp/ycm-install.log"
-            warn "You may need to install additional development packages"
-        fi
-        cd - > /dev/null
+        (
+            cd "$HOME/.vim/plugged/YouCompleteMe" || exit
+            if python3 install.py > /tmp/ycm-install.log 2>&1; then
+                log "YouCompleteMe compiled successfully"
+            else
+                warn "YouCompleteMe compilation had issues - check /tmp/ycm-install.log"
+                warn "You may need to install additional development packages"
+            fi
+        )
     fi
 
     # Install Go binaries for vim-go
