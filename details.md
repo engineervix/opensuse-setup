@@ -40,14 +40,13 @@ The setup translates Fedora's `dnf groups` into openSUSE `patterns` and installs
 - **Neovim:** Replaced legacy Vim setup.
   - **Config:** Cloned from your custom branch: `engineervix/kickstart.nvim` (branch: `custom`).
 - **VS Code:** Installed via the official Microsoft RPM repository.
-- **Brave Browser:** Installed via the official Brave RPM repository.
 - **Zed:** Installed via the official binary script.
 
 ## 🖥️ Shell & Terminal Customization
 
 - **Shell:** `zsh` set as the default login shell.
-- **Prompt:** **Starship** with the `catppuccin-powerline` preset.
-- **Zsh Plugins:** Syntax highlighting and autosuggestions (using native openSUSE package paths).
+- **Prompt:** **Starship** (configured via dotfiles).
+- **Zsh Plugins:** Syntax highlighting, autosuggestions, and completions (cloned from GitHub into `~/.zsh/`).
 - **Modern CLI Replacements:**
   - `ls` ➔ `eza` (with icons)
   - `cat` ➔ `bat`
@@ -63,8 +62,8 @@ The setup translates Fedora's `dnf groups` into openSUSE `patterns` and installs
 ## ⚙️ Utilities & Applications
 The script installs a comprehensive suite of modern and essential tools:
 
-- **Browsers:** Chromium, Google Chrome (official repo), Brave (official repo).
-- **Communication:** Slack, Zoom.
+- **Browsers:** Chromium, Google Chrome (official repo), Brave (official repo), Zen (official binary).
+- **Communication:** Slack.
 - **Media:** 
   - VLC (with Packman Essentials codecs).
   - Spotify (Native RPM via `spotify-easyrpm`).
@@ -86,11 +85,9 @@ The script installs a comprehensive suite of modern and essential tools:
 
 ## 📂 Key File Locations
 - **Main Entrypoint:** `opensuse_setup/install.sh`
-- **Setup Modules:** `opensuse_setup/scripts/` (Sequence: 01_system, 02_packages, 03_tooling, 04_fonts, 05_terminal)
-- **Static Configurations:** `opensuse_setup/conf/`
-- **Neovim Config:** `~/.config/nvim/`
-- **Waybar Config:** `~/.config/waybar/` (Requires user customization post-install)
-- **Hyprland Config:** `~/.config/hypr/` (Requires user customization post-install)
-- **Zsh Config:** `~/.zshrc` (Includes a robust set of Git and Docker aliases)
-- **SourceGit:** Not pre-installed via package manager. It is recommended to download the **AppImage** from GitHub.
+- **Setup Modules:** `opensuse_setup/scripts/` (Sequence: 01_system, 02_packages, 03_tooling, 04_fonts, 05_terminal, 06_dotfiles)
+- **Static Configurations:** `opensuse_setup/conf/` (fallbacks for kitty and vim, used if dotfiles are not set up)
+- **Dotfiles Repository:** `~/dotfiles/` (cloned during phase 6; owns `~/.config/hypr`, `~/.config/waybar`, `~/.config/kitty`, etc. via symlinks)
+- **Neovim Config:** `~/.config/nvim/` (independent repo — `engineervix/kickstart.nvim`, branch `custom`)
+- **Zsh Config:** `~/.zshrc` (includes a robust set of Git and Docker aliases)
 
