@@ -131,6 +131,9 @@ sudo zypper in -y \
     xournalpp \
     yq \
     yt-dlp \
+    zathura \
+    zathura-plugin-pdf-mupdf \
+    zathura-zsh-completion \
     zoxide \
     zsh
 
