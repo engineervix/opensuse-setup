@@ -131,8 +131,6 @@ sudo zypper in -y \
     tmux \
     tokei \
     transmission-gtk \
-    vlc \
-    vlc-codecs \
     xclip \
     xiphos \
     xournalpp \
