@@ -101,7 +101,6 @@ sudo zypper in -y \
     ffmpeg \
     fzf \
     gimp \
-    gpu-screen-recorder \
     imv \
     keychain \
     git \
@@ -143,6 +142,44 @@ sudo zypper in -y \
     zathura-zsh-completion \
     zoxide \
     zsh
+
+# gpu-screen-recorder (build from source)
+# The openSUSE package is patched to hide H264/HEVC support, so we build from
+# upstream source against Packman's ffmpeg-7 to get proper codec detection via VA-API.
+log "Installing gpu-screen-recorder build dependencies..."
+sudo zypper in -y --from packman \
+    ffmpeg-7-libavcodec-devel \
+    ffmpeg-7-libavformat-devel \
+    ffmpeg-7-libavutil-devel \
+    ffmpeg-7-libswresample-devel \
+    ffmpeg-7-libavfilter-devel
+
+sudo zypper in -y \
+    meson \
+    libXcomposite-devel \
+    libXrandr-devel \
+    libXfixes-devel \
+    libXdamage-devel \
+    libva-devel \
+    libcap-devel \
+    libcap-progs \
+    vulkan-headers \
+    pipewire-devel \
+    libpulse-devel
+
+log "Building and installing gpu-screen-recorder from source..."
+GSR_REPO="https://repo.dec05eba.com/gpu-screen-recorder"
+GSR_BUILD_DIR="$(mktemp -d)"
+git clone "$GSR_REPO" "$GSR_BUILD_DIR/gpu-screen-recorder"
+cd "$GSR_BUILD_DIR/gpu-screen-recorder"
+LATEST_TAG=$(git describe --tags "$(git rev-list --tags --max-count=1)")
+git checkout "$LATEST_TAG"
+meson setup --prefix=/usr --buildtype=release "$GSR_BUILD_DIR/build"
+ninja -C "$GSR_BUILD_DIR/build"
+sudo ninja -C "$GSR_BUILD_DIR/build" install
+sudo setcap cap_sys_admin+ep /usr/bin/gsr-kms-server
+cd -
+rm -rf "$GSR_BUILD_DIR"
 
 # Configure git to use git-delta
 # https://github.com/dandavison/delta
