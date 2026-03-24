@@ -89,6 +89,7 @@ sudo zypper in -y \
     audacity \
     blueman \
     bat \
+    brightnessctl \
     btop \
     cifs-utils \
     cliphist \
