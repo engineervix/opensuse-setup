@@ -50,14 +50,21 @@ fi
 log "Installing Poetry and virtualenvwrapper..."
 export PATH="$PATH:$HOME/.local/bin"
 pipx ensurepath
-pipx install poetry
+if ! pipx list --short | grep -q "poetry"; then
+    pipx install poetry
+fi
 sudo zypper in -y python313-virtualenvwrapper
 mkdir -p "$HOME/.zfunc/"
 grep -qF '_poetry' ~/.bash_completion 2>/dev/null || poetry completions bash >> ~/.bash_completion || true
 poetry completions zsh > ~/.zfunc/_poetry || true
 
-# time tracking
-pipx install timetagger_cli
+# Python tools
+log "Installing additional Python tools via pipx..."
+for pkg in timetagger_cli lefthook ggshield; do
+    if ! pipx list --short | grep -q "$pkg"; then
+        pipx install "$pkg"
+    fi
+done
 
 # Go
 log "Installing Go and related tools..."
