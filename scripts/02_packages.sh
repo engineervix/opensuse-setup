@@ -118,6 +118,7 @@ sudo zypper in -y \
     libreoffice \
     libreoffice-gtk3 \
     meld \
+    mpv \
     ncdu \
     okular \
     pandoc \
