@@ -35,6 +35,7 @@ A modular script architecture designed for a minimal Tumbleweed installation (Ge
 ### ⚙️ Utilities & Applications
 - **Browsers:** Chromium, Google Chrome, Brave, Zen.
 - **Media:** VLC, Spotify, Audacity, EasyEffects.
+- **Tools:** Screen Recording (`gpu-screen-recorder`).
 - **Communication:** Slack.
 - **Privacy:** DNS over TLS via Cloudflare.
 
@@ -53,8 +54,7 @@ The script is interactive — it prompts for hostname, Git identity, and (in the
 
 ## Post-Installation
 1. **Spotify:** Run `spotify-easyrpm` to complete the Spotify installation.
-2. **Codecs:** Run `sudo opi codecs` to install restricted multimedia codecs (H.264, AAC, etc.).
-3. **Reboot:** Essential to finalize group permissions (Docker) and start your Hyprland session via SDDM.
+2. **Reboot:** Essential to finalize group permissions (Docker) and start your Hyprland session via SDDM.
 
 ## References
 - [Official openSUSE Documentation](https://en.opensuse.org/Main_Page)

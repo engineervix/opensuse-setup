@@ -7,6 +7,11 @@
 log "--- [Phase 2: Package Installation] ---"
 
 # Core Hyprland Desktop Environment
+log "Configuring Packman repository for multimedia codecs..."
+sudo zypper ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman || true
+sudo zypper --gpg-auto-import-keys ref
+sudo zypper dup --from packman --allow-vendor-change -y
+
 log "Installing Hyprland ecosystem components..."
 sudo zypper in -y \
     hyprland \
@@ -127,6 +132,7 @@ sudo zypper in -y \
     tokei \
     transmission-gtk \
     vlc \
+    vlc-codecs \
     xclip \
     xiphos \
     xournalpp \
@@ -184,9 +190,6 @@ sudo zypper in -y brave-browser
 
 # Spotify (via spotify-easyrpm)
 log "Installing Spotify..."
-sudo zypper rr home_megamaced 2>/dev/null || true
-sudo zypper --gpg-auto-import-keys ar -cfp 90 https://download.opensuse.org/repositories/home:megamaced/openSUSE_Tumbleweed/home:megamaced.repo
-sudo zypper ref
 sudo zypper in -y spotify-easyrpm
 info "To finish Spotify installation, run 'spotify-easyrpm' after the setup is complete."
 
