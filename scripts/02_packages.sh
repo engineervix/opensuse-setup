@@ -35,11 +35,13 @@ sudo zypper in -y \
     slurp \
     pipewire \
     pipewire-pulseaudio \
+    pipewire-aptx \
     wireplumber \
     pavucontrol \
     qt6-wayland \
     libqt5-qtwayland \
     NetworkManager-connection-editor \
+    NetworkManager-applet \
     libnotify-tools \
     hyprland-devel \
     adwaita-qt6 \
@@ -206,6 +208,17 @@ sudo -u "$USER" systemctl --user enable --now pipewire-pulse 2>/dev/null || \
 # Bluetooth
 log "Enabling Bluetooth..."
 sudo systemctl enable --now bluetooth
+
+log "Configuring BlueZ..."
+sudo mkdir -p /etc/bluetooth
+sudo tee /etc/bluetooth/main.conf > /dev/null << 'EOF'
+[Policy]
+AutoEnable=true
+FastConnectable=true
+
+[General]
+DiscoverableTimeout=0
+EOF
 
 # Browsers
 log "Installing Browsers..."
