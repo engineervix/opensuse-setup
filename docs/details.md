@@ -54,6 +54,7 @@ The setup translates Fedora's `dnf groups` into openSUSE `patterns` and installs
   - `grep` ➔ `ripgrep`
   - `cd` ➔ `zoxide`
   - `top` ➔ `btop`
+  - `neofetch` ➔ `fastfetch`
 - **Fonts:**
   - JetBrains Mono Nerd Font
   - Fantasque Sans Mono Nerd Font

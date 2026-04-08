@@ -29,7 +29,7 @@ A modular script architecture designed for a minimal Tumbleweed installation (Ge
 
 ### 🖥️ Terminal & Shell
 - **Zsh:** Default shell with Starship prompt, syntax highlighting, and autosuggestions.
-- **Modern CLI:** `eza`, `bat`, `fd`, `ripgrep`, `zoxide`, `btop`, `fzf`.
+- **Modern CLI:** `eza`, `bat`, `fd`, `ripgrep`, `zoxide`, `btop`, `fzf`, `fastfetch`.
 - **Fonts:** JetBrains Mono, Fantasque Sans Mono, Cascadia Code (all Nerd Font variants).
 
 ### ⚙️ Utilities & Applications

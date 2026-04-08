@@ -100,6 +100,8 @@ sudo zypper in -y \
     engrampa \
     easyeffects \
     eza \
+    fastfetch \
+    fastfetch-zsh-completion \
     fd \
     ffmpeg \
     fzf \
