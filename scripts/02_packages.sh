@@ -186,6 +186,35 @@ sudo setcap cap_sys_admin+ep /usr/bin/gsr-kms-server
 cd -
 rm -rf "$GSR_BUILD_DIR"
 
+# SwayOSD (build from source - not in openSUSE repos)
+# Requires nightly Rust; toolchain is installed temporarily and removed after build.
+log "Installing SwayOSD build dependencies..."
+sudo zypper in -y \
+    sassc \
+    libadwaita-devel \
+    gtk4-layer-shell-devel \
+    libgtk4-layer-shell0 \
+    libevdev-devel
+
+log "Installing nightly Rust toolchain (required by SwayOSD)..."
+rustup toolchain install nightly
+
+log "Building and installing SwayOSD from source..."
+SWAYOSD_BUILD_DIR="$(mktemp -d)"
+git clone https://github.com/ErikReider/SwayOSD "$SWAYOSD_BUILD_DIR/swayosd"
+cd "$SWAYOSD_BUILD_DIR/swayosd"
+LATEST_TAG=$(git describe --tags "$(git rev-list --tags --max-count=1)")
+git checkout "$LATEST_TAG"
+PATH="$HOME/.cargo/bin:$PATH" meson setup --prefix=/usr --buildtype=release "$SWAYOSD_BUILD_DIR/build"
+ninja -C "$SWAYOSD_BUILD_DIR/build"
+sudo env PATH="$PATH" ninja -C "$SWAYOSD_BUILD_DIR/build" install
+sudo usermod -aG video "$USER"
+cd -
+rm -rf "$SWAYOSD_BUILD_DIR"
+
+log "Removing nightly Rust toolchain..."
+rustup toolchain uninstall nightly
+
 # Configure git to use git-delta
 # https://github.com/dandavison/delta
 log "Configuring git with git-delta..."
