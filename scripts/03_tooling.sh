@@ -139,6 +139,21 @@ if ! command -v code &>/dev/null; then
     sudo zypper in -y code
 fi
 
+# Configure VS Code keyring backend (Hyprland not auto-detected by Chromium oscrypt)
+log "Configuring VS Code keyring..."
+mkdir -p "$HOME/.vscode"
+python3 -c "
+import json, os
+path = os.path.expanduser('~/.vscode/argv.json')
+data = {}
+if os.path.exists(path):
+    with open(path) as f:
+        data = json.load(f)
+data.setdefault('password-store', 'gnome-libsecret')
+with open(path, 'w') as f:
+    json.dump(data, f, indent='\t')
+"
+
 # Vim configuration
 log "Configuring Vim..."
 cp "${SCRIPT_DIR}/conf/vimrc" "$HOME/.vimrc"
