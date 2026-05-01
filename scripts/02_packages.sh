@@ -148,6 +148,19 @@ sudo zypper in -y \
     zoxide \
     zsh
 
+# ffmpeg libs: OSS builds lack HEVC/H.264 (patent-encumbered). Installing ffmpeg
+# from the essential tools block above pulls in OSS libavcodec62 and siblings.
+# Explicitly switch them to Packman builds after the fact.
+log "Switching ffmpeg libs to Packman builds (HEVC/codec support)..."
+sudo zypper in -y --from packman \
+    libavcodec62 \
+    libavdevice62 \
+    libavfilter11 \
+    libavformat62 \
+    libavutil60 \
+    libswresample6 \
+    libswscale9
+
 # gpu-screen-recorder (build from source)
 # The openSUSE package is patched to hide H264/HEVC support, so we build from
 # upstream source against Packman's ffmpeg-7 to get proper codec detection via VA-API.
