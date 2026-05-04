@@ -189,14 +189,15 @@ log "Building and installing gpu-screen-recorder from source..."
 GSR_REPO="https://repo.dec05eba.com/gpu-screen-recorder"
 GSR_BUILD_DIR="$(mktemp -d)"
 git clone "$GSR_REPO" "$GSR_BUILD_DIR/gpu-screen-recorder"
-cd "$GSR_BUILD_DIR/gpu-screen-recorder"
-LATEST_TAG=$(git describe --tags "$(git rev-list --tags --max-count=1)")
-git checkout "$LATEST_TAG"
-meson setup --prefix=/usr --buildtype=release "$GSR_BUILD_DIR/build"
-ninja -C "$GSR_BUILD_DIR/build"
-sudo ninja -C "$GSR_BUILD_DIR/build" install
-sudo setcap cap_sys_admin+ep /usr/bin/gsr-kms-server
-cd -
+(
+    cd "$GSR_BUILD_DIR/gpu-screen-recorder" || exit
+    LATEST_TAG=$(git describe --tags "$(git rev-list --tags --max-count=1)")
+    git checkout "$LATEST_TAG"
+    meson setup --prefix=/usr --buildtype=release "$GSR_BUILD_DIR/build"
+    ninja -C "$GSR_BUILD_DIR/build"
+    sudo ninja -C "$GSR_BUILD_DIR/build" install
+    sudo setcap cap_sys_admin+ep /usr/bin/gsr-kms-server
+)
 rm -rf "$GSR_BUILD_DIR"
 
 # SwayOSD (build from source - not in openSUSE repos)
@@ -215,14 +216,15 @@ rustup toolchain install nightly
 log "Building and installing SwayOSD from source..."
 SWAYOSD_BUILD_DIR="$(mktemp -d)"
 git clone https://github.com/ErikReider/SwayOSD "$SWAYOSD_BUILD_DIR/swayosd"
-cd "$SWAYOSD_BUILD_DIR/swayosd"
-LATEST_TAG=$(git describe --tags "$(git rev-list --tags --max-count=1)")
-git checkout "$LATEST_TAG"
-PATH="$HOME/.cargo/bin:$PATH" meson setup --prefix=/usr --buildtype=release "$SWAYOSD_BUILD_DIR/build"
-ninja -C "$SWAYOSD_BUILD_DIR/build"
-sudo env PATH="$PATH" ninja -C "$SWAYOSD_BUILD_DIR/build" install
-sudo usermod -aG video "$USER"
-cd -
+(
+    cd "$SWAYOSD_BUILD_DIR/swayosd" || exit
+    LATEST_TAG=$(git describe --tags "$(git rev-list --tags --max-count=1)")
+    git checkout "$LATEST_TAG"
+    PATH="$HOME/.cargo/bin:$PATH" meson setup --prefix=/usr --buildtype=release "$SWAYOSD_BUILD_DIR/build"
+    ninja -C "$SWAYOSD_BUILD_DIR/build"
+    sudo env PATH="$PATH" ninja -C "$SWAYOSD_BUILD_DIR/build" install
+    sudo usermod -aG video "$USER"
+)
 rm -rf "$SWAYOSD_BUILD_DIR"
 
 log "Removing nightly Rust toolchain..."
