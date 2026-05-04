@@ -1,5 +1,9 @@
 # openSUSE Tumbleweed Developer Setup
 
+![openSUSE](https://img.shields.io/badge/openSUSE-%2364B345?style=for-the-badge&logo=openSUSE&logoColor=white)
+![Bash Script](https://img.shields.io/badge/bash_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white)
+[![ShellCheck](https://github.com/engineervix/opensuse-setup/actions/workflows/main.yml/badge.svg)](https://github.com/engineervix/opensuse-setup/actions/workflows/main.yml)
+
 Automated setup script for openSUSE Tumbleweed, configuring a complete Hyprland-based development environment with modern tools, editors, and applications.
 
 ## Stack
