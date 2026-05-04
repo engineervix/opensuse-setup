@@ -2,7 +2,7 @@
 
 Automated setup script for openSUSE Tumbleweed, configuring a complete Hyprland-based development environment with modern tools, editors, and applications.
 
-## Environment
+## Stack
 
 A modular script architecture designed for a minimal Tumbleweed installation (Generic Desktop system role). It establishes a pure Wayland development environment using:
 
@@ -14,36 +14,13 @@ A modular script architecture designed for a minimal Tumbleweed installation (Ge
 | **Terminal** | Kitty |
 | **Editor** | Neovim (Kickstart-based) |
 
-## Features
-
-### 🛠️ Development Tools
-- **Languages:** Python (pyenv/Poetry), Node.js (Volta), Go, Rust.
-- **Containers:** Docker.
-- **Cloud/CLI:** AWS CLI, Heroku CLI, GitHub/GitLab CLI.
-- **VCS:** Git with `delta` and `lazygit`.
-
-### 📝 Editors & IDEs
-- **Neovim** (Kickstart, custom branch)
-- **VS Code** (Official Repo)
-- **Zed**
-
-### 🖥️ Terminal & Shell
-- **Zsh:** Default shell with Starship prompt, syntax highlighting, and autosuggestions.
-- **Modern CLI:** `eza`, `bat`, `fd`, `ripgrep`, `zoxide`, `btop`, `fzf`, `fastfetch`.
-- **Fonts:** JetBrains Mono, Fantasque Sans Mono, Cascadia Code (all Nerd Font variants).
-
-### ⚙️ Utilities & Applications
-- **Browsers:** Chromium, Google Chrome, Brave, Zen.
-- **Media:** VLC, Spotify, Audacity, EasyEffects.
-- **Tools:** Screen Recording (`gpu-screen-recorder`).
-- **Communication:** Slack.
-- **Privacy:** DNS over TLS via Cloudflare.
+See [docs/details.md](docs/details.md) for a full breakdown of packages, configurations, and architectural decisions.
 
 ## Installation
 
 ```bash
 git clone https://github.com/engineervix/opensuse-setup.git
-cd opensuse-setup/opensuse_setup
+cd opensuse-setup
 chmod +x install.sh scripts/*.sh
 ./install.sh
 ```
