@@ -103,6 +103,15 @@ if ! command -v ctop &> /dev/null; then
     sudo chmod +x /usr/local/bin/ctop
 fi
 
+# presenterm (terminal presentation tool)
+log "Installing presenterm..."
+if ! command -v presenterm &>/dev/null; then
+    PRESENTERM_VERSION=$(curl -s https://api.github.com/repos/mfontanini/presenterm/releases/latest | grep '"tag_name"' | cut -d'"' -f4 | sed 's/^v//')
+    mkdir -p "$HOME/bin"
+    curl -fsSL "https://github.com/mfontanini/presenterm/releases/download/v${PRESENTERM_VERSION}/presenterm-${PRESENTERM_VERSION}-x86_64-unknown-linux-musl.tar.gz" \
+        | tar -xz --strip-components=1 -C "$HOME/bin" "presenterm-${PRESENTERM_VERSION}-x86_64-unknown-linux-musl/presenterm"
+fi
+
 # Neovim & Custom Kickstart
 log "Setting up Neovim compiler dependencies (gcc, make) and utilities..."
 sudo zypper in -y neovim gcc make ripgrep fd wl-clipboard xclip
