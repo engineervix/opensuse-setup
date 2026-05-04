@@ -1,0 +1,12 @@
+pre-commit:
+  parallel: false
+  commands:
+    shellcheck:
+      tags: lint
+      glob: "*.sh"
+      files: git diff --name-only --staged
+      run: shellcheck {staged_files}
+    ggshield:
+      tags: secret
+      files: git diff --name-only --staged
+      run: ggshield secret scan pre-commit {staged_files}
