@@ -9,7 +9,7 @@ Unlike GNOME's "all-in-one" approach, this setup uses modular Wayland components
 | Component         | Choice                  | Description                                                   |
 | :---------------- | :---------------------- | :------------------------------------------------------------ |
 | **Compositor**    | `hyprland`              | Dynamic tiling Wayland compositor. |
-| **Critical Asset**| `hyprland-qtutils`      | Suppresses missing asset warnings when disabling standard zypper recommendations. |
+| **Qt Utils**      | `hyprland-qtutils`      | Suppresses missing asset warnings when disabling standard zypper recommendations. |
 | **Display Mgr**   | `sddm-qt6`              | Wayland-native display manager, replacing legacy sddm (Qt5).  |
 | **Status Bar**    | `waybar`                | Highly customizable GTK bar.                                  |
 | **App Launcher**  | `rofi`                  | Application runner and menu system (native Wayland support since 2025). |
@@ -38,7 +38,7 @@ The setup translates Fedora's `dnf groups` into openSUSE `patterns` and installs
 ## 📝 Modern Text Editors
 
 - **Neovim:** Replaced legacy Vim setup.
-  - **Config:** Cloned from your custom branch: `engineervix/kickstart.nvim` (branch: `custom`).
+  - **Config:** `engineervix/kickstart.nvim` (branch: `custom`).
 - **VS Code:** Installed via the official Microsoft RPM repository.
 - **Zed:** Installed via the official binary script.
 
@@ -80,7 +80,7 @@ The script installs a comprehensive suite of modern and essential tools:
   - GParted for partition management.
   - Transmission-GTK for BitTorrent.
   - Screenkey for screencasts.
-  - DB Browser for SQLite, SQLite Browser.
+  - DB Browser for SQLite.
   - `htop`, `btop` for monitoring.
 - **API Client:** Bruno (Native RPM from official GitHub).
 
@@ -91,4 +91,3 @@ The script installs a comprehensive suite of modern and essential tools:
 - **Dotfiles Repository:** `~/dotfiles/` (cloned during phase 6; owns `~/.config/hypr`, `~/.config/waybar`, `~/.config/kitty`, etc. via symlinks)
 - **Neovim Config:** `~/.config/nvim/` (independent repo — `engineervix/kickstart.nvim`, branch `custom`)
 - **Zsh Config:** `~/.zshrc` (includes a robust set of Git and Docker aliases)
-
