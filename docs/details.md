@@ -75,6 +75,7 @@ The script installs a comprehensive suite of modern and essential tools:
   - LibreOffice.
   - Okular, Xournal++, gscan2pdf for PDF/document management.
   - Meld for visual diffing.
+  - [presenterm](https://github.com/mfontanini/presenterm) for terminal-based markdown presentations (binary installed to `~/bin/`).
   - Xiphos (Bible study tool).
 - **System & Utility:**
   - GParted for partition management.
