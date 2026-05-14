@@ -106,6 +106,7 @@ sudo zypper in -y \
     fd \
     ffmpeg \
     fzf \
+    v4l-utils \
     gimp \
     imv \
     keychain \
