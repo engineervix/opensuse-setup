@@ -14,6 +14,7 @@ sudo zypper rr google-chrome 2>/dev/null || true
 sudo zypper rr packman 2>/dev/null || true
 sudo zypper rr packman-essentials 2>/dev/null || true
 sudo zypper rr home_megamaced 2>/dev/null || true
+sudo zypper rr Education 2>/dev/null || true
 
 # Refresh repositories and trust keys early
 log "Refreshing repositories and trusting GPG keys..."
@@ -75,4 +76,8 @@ sudo zypper in -y opi
 
 log "Adding Packman Essentials repository (recommended to prevent update conflicts)..."
 sudo zypper --gpg-auto-import-keys ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/Essentials/ packman-essentials || true
+
+log "Adding Education repository (provides xiphos and other educational software)..."
+sudo zypper --gpg-auto-import-keys ar https://download.opensuse.org/repositories/Education/openSUSE_Tumbleweed/Education.repo Education || true
+
 sudo zypper ref
