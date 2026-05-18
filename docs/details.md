@@ -78,6 +78,7 @@ The script installs a comprehensive suite of modern and essential tools:
   - [presenterm](https://github.com/mfontanini/presenterm) for terminal-based markdown presentations (binary installed to `~/bin/`).
   - Xiphos (Bible study tool).
 - **System & Utility:**
+  - Avahi (`avahi` + `avahi-utils`) for mDNS/DNS-SD — enables `.local` hostname resolution on the local network (e.g. `homeassistant.local`). Requires the `mdns` firewall service to be open, which the script handles. If resolution still fails, set `allow-interfaces=<iface>` in `/etc/avahi/avahi-daemon.conf` to prevent avahi binding to Docker/VPN interfaces.
   - GParted for partition management.
   - Transmission-GTK for BitTorrent.
   - Screenkey for screencasts.

@@ -90,6 +90,8 @@ sudo zypper in -y \
 log "Installing utilities and applications..."
 sudo zypper in -y \
     audacity \
+    avahi \
+    avahi-utils \
     blueman \
     bat \
     brightnessctl \
@@ -267,6 +269,18 @@ FastConnectable=true
 [General]
 DiscoverableTimeout=0
 EOF
+
+# Avahi (mDNS/DNS-SD)
+log "Enabling Avahi mDNS daemon..."
+sudo systemctl enable --now avahi-daemon
+
+log "Opening mDNS in firewall (required for .local hostname resolution)..."
+sudo firewall-cmd --add-service=mdns --permanent
+sudo firewall-cmd --reload
+# NOTE: If .local hostnames still don't resolve, avahi may be binding to the wrong
+# interface (e.g. Docker bridges, Tailscale). Fix: add allow-interfaces=<iface>
+# under [server] in /etc/avahi/avahi-daemon.conf, then restart avahi-daemon.
+# Find your interface name with: ip link show
 
 # Browsers
 log "Installing Browsers..."
