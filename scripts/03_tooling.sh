@@ -47,6 +47,12 @@ if ! command -v pyenv &> /dev/null; then
     curl https://pyenv.run | bash
 fi
 
+log "Installing uv..."
+if ! command -v uv &> /dev/null; then
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
 log "Installing Poetry and virtualenvwrapper..."
 export PATH="$PATH:$HOME/.local/bin"
 pipx ensurepath
