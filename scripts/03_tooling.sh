@@ -118,6 +118,16 @@ if ! command -v presenterm &>/dev/null; then
         | tar -xz --strip-components=1 -C "$HOME/bin" "presenterm-${PRESENTERM_VERSION}-x86_64-unknown-linux-musl/presenterm"
 fi
 
+# Terraform
+log "Installing Terraform..."
+if ! command -v terraform &> /dev/null; then
+    TERRAFORM_VERSION=$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r .current_version)
+    curl -Lo /tmp/terraform.zip "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+    unzip -q /tmp/terraform.zip -d /tmp/
+    sudo mv /tmp/terraform /usr/local/bin/
+    rm /tmp/terraform.zip
+fi
+
 # Neovim & Custom Kickstart
 log "Setting up Neovim compiler dependencies (gcc, make) and utilities..."
 sudo zypper in -y neovim gcc make ripgrep fd wl-clipboard xclip
