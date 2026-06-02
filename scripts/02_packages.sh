@@ -146,10 +146,20 @@ sudo zypper in -y \
     yq \
     yt-dlp \
     zathura \
-    zathura-plugin-pdf-mupdf \
+    zathura-plugin-pdf-poppler \
     zathura-zsh-completion \
     zoxide \
     zsh
+
+# PDF backend (2026-06-01): use zathura-plugin-pdf-poppler, NOT
+# zathura-plugin-pdf-mupdf. The mupdf plugin (2026.05.10) broke on Tumbleweed
+# after the mupdf 1.27.2 update — it links mupdf statically but not mupdf's
+# system codec libs (libjpeg-turbo, openjpeg, jbig2dec, brotli), so it fails to
+# load with `undefined symbol: jpeg_resync_to_restart` (~284 unresolved
+# symbols). poppler links libpoppler-glib dynamically and loads clean. The two
+# plugins conflict (both provide application/pdf), so only one may be installed.
+# Bug report: docs/zathura-mupdf-bug.md. Revert to mupdf once it is rebuilt
+# against system codec libs.
 
 # ffmpeg libs: OSS builds lack HEVC/H.264 (patent-encumbered). Installing ffmpeg
 # from the essential tools block above pulls in OSS libavcodec62 and siblings.
