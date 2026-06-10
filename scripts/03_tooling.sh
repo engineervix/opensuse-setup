@@ -72,6 +72,18 @@ for pkg in timetagger_cli lefthook ggshield; do
     fi
 done
 
+# Ruby
+log "Installing rbenv for Ruby version management..."
+if [ ! -d "$HOME/.rbenv" ]; then
+    curl -fsSL https://rbenv.org/install.sh | bash
+fi
+
+if ! "$HOME/.rbenv/bin/rbenv" global 2>/dev/null | grep -qv 'system'; then
+    RUBY_VERSION=$("$HOME/.rbenv/bin/rbenv" install -l 2>/dev/null | awk '/^[0-9]+\.[0-9]+\.[0-9]+$/' | tail -1)
+    "$HOME/.rbenv/bin/rbenv" install "$RUBY_VERSION"
+    "$HOME/.rbenv/bin/rbenv" global "$RUBY_VERSION"
+fi
+
 # Go
 log "Installing Go and related tools..."
 if ! command -v go &> /dev/null; then
