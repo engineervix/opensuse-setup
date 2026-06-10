@@ -84,6 +84,9 @@ if ! "$HOME/.rbenv/bin/rbenv" global 2>/dev/null | grep -qv 'system'; then
     "$HOME/.rbenv/bin/rbenv" global "$RUBY_VERSION"
 fi
 
+log "Installing Ruby gems..."
+gem install try-cli
+
 # Go
 log "Installing Go and related tools..."
 if ! command -v go &> /dev/null; then
