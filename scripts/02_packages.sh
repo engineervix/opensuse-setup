@@ -131,7 +131,9 @@ sudo zypper in -y \
     ncdu \
     okular \
     pandoc \
+    poppler-tools \
     rclone \
+    resvg \
     ripgrep \
     screenkey \
     ShellCheck \
@@ -143,6 +145,8 @@ sudo zypper in -y \
     xclip \
     xiphos \
     xournalpp \
+    yazi \
+    yazi-zsh-completion \
     yq \
     yt-dlp \
     zathura \
