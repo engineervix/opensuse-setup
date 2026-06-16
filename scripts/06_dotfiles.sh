@@ -31,3 +31,15 @@ fi
 chmod +x "$BOOTSTRAP"
 log "Running dotfiles bootstrap..."
 bash "$BOOTSTRAP"
+
+# GTK dark theme — Hyprland has no settings daemon so gsettings is not read by
+# GTK apps at runtime. Static ini files are the reliable fallback.
+log "Writing GTK dark theme settings..."
+mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0"
+for dir in gtk-3.0 gtk-4.0; do
+    cat > "$HOME/.config/${dir}/settings.ini" <<'EOF'
+[Settings]
+gtk-application-prefer-dark-theme=1
+gtk-theme-name=Adwaita-dark
+EOF
+done
