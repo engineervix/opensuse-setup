@@ -94,6 +94,7 @@ sudo zypper in -y \
     avahi-utils \
     blueman \
     bat \
+    bc \
     brightnessctl \
     btop \
     cifs-utils \
