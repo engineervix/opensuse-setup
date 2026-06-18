@@ -140,6 +140,7 @@ sudo zypper in -y \
     ShellCheck \
     socat \
     sqlitebrowser \
+    taskwarrior \
     tmux \
     tokei \
     transmission-gtk \
