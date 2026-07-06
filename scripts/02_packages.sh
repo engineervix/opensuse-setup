@@ -144,6 +144,7 @@ sudo zypper in -y \
     tmux \
     tokei \
     transmission-gtk \
+    trivy \
     xclip \
     xiphos \
     xournalpp \
