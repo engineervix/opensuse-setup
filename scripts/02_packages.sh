@@ -86,7 +86,7 @@ sudo zypper in -y \
     ruby-devel \
     sqlite3-devel \
     tk-devel \
-    wxWidgets-3_2-devel \
+    wxGTK3-3_2-devel \
     xz-devel
 
 # Essential Tools
