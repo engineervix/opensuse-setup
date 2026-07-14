@@ -57,6 +57,7 @@ sudo zypper in -y --no-recommends -t pattern devel_basis devel_C_C++
 log "Installing core development packages..."
 sudo zypper in -y \
     libbz2-devel \
+    Catch2-devel \
     cmake \
     expat \
     libexpat-devel \
@@ -66,6 +67,7 @@ sudo zypper in -y \
     gstreamer-plugins-base-devel \
     libffi-devel \
     libpcap-devel \
+    libtag-devel \
     postgresql-devel \
     postgresql-server-devel \
     libpqxx-devel \
@@ -84,6 +86,7 @@ sudo zypper in -y \
     ruby-devel \
     sqlite3-devel \
     tk-devel \
+    wxWidgets-3_2-devel \
     xz-devel
 
 # Essential Tools
