@@ -160,15 +160,6 @@ if ! command -v zed &> /dev/null; then
     curl -f https://zed.dev/install.sh | sh
 fi
 
-# antigravity
-log "Installing antigravity..."
-if ! zypper repos | grep -q "antigravity-rpm"; then
-    sudo zypper addrepo --no-gpgcheck https://us-central1-yum.pkg.dev/projects/antigravity-auto-updater-dev/antigravity-rpm antigravity-rpm
-fi
-if ! command -v antigravity &> /dev/null; then
-    sudo zypper in -y antigravity
-fi
-
 # Visual Studio Code
 log "Installing Visual Studio Code..."
 if ! zypper repos --uri | grep -q "packages.microsoft.com/yumrepos/vscode"; then
