@@ -160,31 +160,6 @@ if ! command -v zed &> /dev/null; then
     curl -f https://zed.dev/install.sh | sh
 fi
 
-# Visual Studio Code
-log "Installing Visual Studio Code..."
-if ! zypper repos --uri | grep -q "packages.microsoft.com/yumrepos/vscode"; then
-    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-    echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/zypp/repos.d/vscode.repo > /dev/null
-fi
-if ! command -v code &>/dev/null; then
-    sudo zypper in -y code
-fi
-
-# Configure VS Code keyring backend (Hyprland not auto-detected by Chromium oscrypt)
-log "Configuring VS Code keyring..."
-mkdir -p "$HOME/.vscode"
-python3 -c "
-import json, os
-path = os.path.expanduser('~/.vscode/argv.json')
-data = {}
-if os.path.exists(path):
-    with open(path) as f:
-        data = json.load(f)
-data.setdefault('password-store', 'gnome-libsecret')
-with open(path, 'w') as f:
-    json.dump(data, f, indent='\t')
-"
-
 # Vim configuration
 log "Configuring Vim..."
 cp "${SCRIPT_DIR}/conf/vimrc" "$HOME/.vimrc"
