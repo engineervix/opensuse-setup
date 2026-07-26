@@ -32,6 +32,12 @@ read -rp 'Git email: ' git_email
 git config --global user.name "$git_name"
 git config --global user.email "$git_email"
 
+read -rp 'GPG signing key (blank to skip commit signing): ' git_signingkey
+if [ -n "$git_signingkey" ]; then
+    git config --global user.signingkey "$git_signingkey"
+    git config --global commit.gpgsign true
+fi
+
 # Configure DNS over TLS for better privacy
 setup_dns() {
     log "Setting up secure DNS with Cloudflare DNS over TLS..."

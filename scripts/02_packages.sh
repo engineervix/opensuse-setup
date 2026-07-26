@@ -261,6 +261,7 @@ git config --global core.pager delta
 git config --global interactive.diffFilter 'delta --color-only'
 git config --global delta.navigate true
 git config --global delta.dark true  # or `delta.light true`, or omit for auto-detection
+git config --global delta.side-by-side true
 git config --global merge.conflictStyle zdiff3
 
 # GitHub CLI extensions
