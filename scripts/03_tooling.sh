@@ -96,6 +96,19 @@ go install golang.org/x/tools/gopls@latest
 gopath_bin="$(go env GOPATH)/bin"
 GOPATH=$HOME/go curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b "$gopath_bin"
 
+log "Installing diffnav (delta-based git diff pager with file tree)..."
+# go.mod carries replace directives, which `go install ...@latest` rejects, so build from a clone instead.
+DIFFNAV_BUILD_DIR="$(mktemp -d)"
+git clone https://github.com/dlvhdr/diffnav "$DIFFNAV_BUILD_DIR"
+(
+    cd "$DIFFNAV_BUILD_DIR" || exit
+    LATEST_TAG=$(git describe --tags "$(git rev-list --tags --max-count=1)")
+    git checkout "$LATEST_TAG"
+    go install .
+)
+rm -rf "$DIFFNAV_BUILD_DIR"
+git config --global pager.diff diffnav
+
 # Rust
 log "Installing Rust ecosystem..."
 if ! command -v rustc &> /dev/null; then
