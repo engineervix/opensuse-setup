@@ -7,6 +7,14 @@
 
 log "--- [Phase 5: Terminal Configuration] ---"
 
+# Carapace (multi-shell completion engine)
+log "Installing Carapace..."
+if ! command -v carapace &> /dev/null; then
+    sudo zypper ar --gpgcheck-allow-unsigned -f https://yum.fury.io/rsteube/ carapace || true
+    sudo zypper --gpg-auto-import-keys refresh carapace
+    sudo zypper in -y carapace-bin
+fi
+
 # Starship
 log "Installing and configuring Starship prompt..."
 sudo zypper in -y starship
