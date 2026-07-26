@@ -263,6 +263,14 @@ git config --global delta.navigate true
 git config --global delta.dark true  # or `delta.light true`, or omit for auto-detection
 git config --global merge.conflictStyle zdiff3
 
+# GitHub CLI extensions
+log "Installing GitHub CLI extensions..."
+for ext in dlvhdr/gh-dash agynio/gh-pr-review; do
+    if ! gh extension list 2>/dev/null | grep -q "$(basename "$ext")"; then
+        gh extension install "$ext"
+    fi
+done
+
 # Docker
 log "Installing Docker..."
 sudo zypper in -y docker docker-compose
