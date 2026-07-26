@@ -27,13 +27,7 @@ mkdir -p "$HOME/.zsh"
 [ -d "$HOME/.zsh/zsh-autosuggestions" ]     || git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.zsh/zsh-autosuggestions"
 [ -d "$HOME/.zsh/zsh-completions" ]         || git clone https://github.com/zsh-users/zsh-completions.git "$HOME/.zsh/zsh-completions"
 
-# ZSH configuration
-log "Configuring ZSH..."
-if [[ -s "$HOME/.zshrc" ]]; then
-    cp -v "$HOME/.zshrc" "$HOME/.zshrc.backup.$(date +%Y%m%d-%H%M%S)"
-fi
-
-cp "${SCRIPT_DIR}/conf/zshrc_template" "$HOME/.zshrc"
+# NOTE: .zshrc itself is owned by the dotfiles repo, symlinked in by 06_dotfiles.sh.
 
 # Change default shell
 log "Changing default shell to zsh..."
