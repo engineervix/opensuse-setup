@@ -330,6 +330,13 @@ sudo zypper --gpg-auto-import-keys ar -f https://brave-browser-rpm-release.s3.br
 sudo zypper ref
 sudo zypper in -y brave-browser
 
+# Playwright (headless browser testing)
+# All other shared-lib deps (atk, cairo, nss, cups-libs, gtk3, gbm, X11 libs,
+# pango) are already pulled in by the browser installs above. icu and flite
+# are not, and `playwright install-deps` fails on Tumbleweed anyway (it
+# shells out to apt-get, which doesn't exist here) — so install them directly.
+sudo zypper in -y icu flite
+
 # Spotify (via spotify-easyrpm)
 log "Installing Spotify..."
 sudo zypper in -y spotify-easyrpm
