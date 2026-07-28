@@ -20,6 +20,10 @@ log "Installing and configuring Starship prompt..."
 sudo zypper in -y starship
 mkdir -p "$HOME/.config"
 
+# Atuin (shell history)
+log "Installing Atuin..."
+sudo zypper in -y atuin atuin-zsh-completion
+
 # Kitty Configuration
 log "Configuring Kitty terminal..."
 mkdir -p "$HOME/.config/kitty"
