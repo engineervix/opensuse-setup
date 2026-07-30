@@ -124,6 +124,7 @@ sudo zypper in -y \
     gparted \
     gscan2pdf \
     htop \
+    hyperfine \
     inkscape \
     jq \
     just \
