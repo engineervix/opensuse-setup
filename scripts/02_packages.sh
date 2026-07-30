@@ -146,6 +146,7 @@ sudo zypper in -y \
     socat \
     sqlitebrowser \
     taskwarrior \
+    tealdeer \
     timewarrior \
     tmux \
     tokei \
