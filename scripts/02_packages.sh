@@ -114,6 +114,7 @@ sudo zypper in -y \
     fzf \
     v4l-utils \
     gimp \
+    glow \
     imv \
     keychain \
     git \
