@@ -14,40 +14,40 @@ sudo zypper dup --from packman --allow-vendor-change -y
 
 log "Installing Hyprland ecosystem components..."
 sudo zypper in -y \
-    hyprland \
-    hyprland-qtutils \
-    waybar \
-    rofi \
-    kitty \
-    dunst \
-    hyprpaper \
-    hypridle \
-    hyprlock \
-    hyprsunset \
-    wlogout \
-    polkit-kde-agent-6 \
-    wl-clipboard \
-    thunar \
-    thunar-archive-plugin \
-    xdg-desktop-portal-hyprland \
-    sddm-qt6 \
-    grim \
-    slurp \
-    pipewire \
-    pipewire-pulseaudio \
-    pipewire-aptx \
-    wireplumber \
-    pavucontrol \
-    qt6-wayland \
-    libqt5-qtwayland \
-    NetworkManager-connection-editor \
-    NetworkManager-applet \
-    libnotify-tools \
-    hyprland-devel \
-    adwaita-qt6 \
-    papirus-icon-theme \
-    qt6-multimedia-imports \
-    qt6ct
+  hyprland \
+  hyprland-qtutils \
+  waybar \
+  rofi \
+  kitty \
+  dunst \
+  hyprpaper \
+  hypridle \
+  hyprlock \
+  hyprsunset \
+  wlogout \
+  polkit-kde-agent-6 \
+  wl-clipboard \
+  thunar \
+  thunar-archive-plugin \
+  xdg-desktop-portal-hyprland \
+  sddm-qt6 \
+  grim \
+  slurp \
+  pipewire \
+  pipewire-pulseaudio \
+  pipewire-aptx \
+  wireplumber \
+  pavucontrol \
+  qt6-wayland \
+  libqt5-qtwayland \
+  NetworkManager-connection-editor \
+  NetworkManager-applet \
+  libnotify-tools \
+  hyprland-devel \
+  adwaita-qt6 \
+  papirus-icon-theme \
+  qt6-multimedia-imports \
+  qt6ct
 
 # Development Patterns
 log "Installing core development patterns and dependencies..."
@@ -56,114 +56,115 @@ sudo zypper in -y --no-recommends -t pattern devel_basis devel_C_C++
 
 log "Installing core development packages..."
 sudo zypper in -y \
-    libbz2-devel \
-    Catch2-devel \
-    cmake \
-    expat \
-    libexpat-devel \
-    gdbm-devel \
-    git-lfs \
-    gstreamer-devel \
-    gstreamer-plugins-base-devel \
-    libffi-devel \
-    libpcap-devel \
-    libtag-devel \
-    postgresql-devel \
-    postgresql-server-devel \
-    libpqxx-devel \
-    libyaml-devel \
-    ncurses-devel \
-    libopenssl-devel \
-    libstdc++-devel \
-    mkcert \
-    patchelf \
-    python3-devel \
-    python3-pip \
-    python3-pipx \
-    python3-virtualenv \
-    python3-wheel \
-    readline-devel \
-    ruby-devel \
-    sqlite3-devel \
-    tk-devel \
-    wxGTK3-3_2-devel \
-    xz-devel
+  libbz2-devel \
+  Catch2-devel \
+  cmake \
+  expat \
+  libexpat-devel \
+  gdbm-devel \
+  git-lfs \
+  gstreamer-devel \
+  gstreamer-plugins-base-devel \
+  libffi-devel \
+  libpcap-devel \
+  libtag-devel \
+  postgresql-devel \
+  postgresql-server-devel \
+  libpqxx-devel \
+  libyaml-devel \
+  ncurses-devel \
+  libopenssl-devel \
+  libstdc++-devel \
+  mkcert \
+  patchelf \
+  python3-devel \
+  python3-pip \
+  python3-pipx \
+  python3-virtualenv \
+  python3-wheel \
+  readline-devel \
+  ruby-devel \
+  sqlite3-devel \
+  tk-devel \
+  wxGTK3-3_2-devel \
+  xz-devel
 
 # Essential Tools
 log "Installing utilities and applications..."
 sudo zypper in -y \
-    audacity \
-    avahi \
-    avahi-utils \
-    blueman \
-    bat \
-    bc \
-    brightnessctl \
-    btop \
-    cifs-utils \
-    cliphist \
-    d2 \
-    duf \
-    engrampa \
-    easyeffects \
-    eza \
-    fastfetch \
-    fastfetch-zsh-completion \
-    fd \
-    ffmpeg \
-    fzf \
-    v4l-utils \
-    gimp \
-    glow \
-    imv \
-    keychain \
-    git \
-    git-delta \
-    gh \
-    glab \
-    gparted \
-    gscan2pdf \
-    htop \
-    hyperfine \
-    inkscape \
-    jq \
-    just \
-    lazygit \
-    libva-utils \
-    libreoffice \
-    libreoffice-gtk3 \
-    meld \
-    mpv \
-    ncdu \
-    okular \
-    pandoc \
-    poppler-tools \
-    rclone \
-    resvg \
-    ripgrep \
-    screenkey \
-    ShellCheck \
-    socat \
-    sqlitebrowser \
-    taskwarrior \
-    tealdeer \
-    timewarrior \
-    tmux \
-    tokei \
-    transmission-gtk \
-    trivy \
-    xclip \
-    xiphos \
-    xournalpp \
-    yazi \
-    yazi-zsh-completion \
-    yq \
-    yt-dlp \
-    zathura \
-    zathura-plugin-pdf-poppler \
-    zathura-zsh-completion \
-    zoxide \
-    zsh
+  audacity \
+  avahi \
+  avahi-utils \
+  blueman \
+  bat \
+  bc \
+  brightnessctl \
+  btop \
+  cifs-utils \
+  cliphist \
+  d2 \
+  difftastic \
+  duf \
+  engrampa \
+  easyeffects \
+  eza \
+  fastfetch \
+  fastfetch-zsh-completion \
+  fd \
+  ffmpeg \
+  fzf \
+  v4l-utils \
+  gimp \
+  glow \
+  imv \
+  keychain \
+  git \
+  git-delta \
+  gh \
+  glab \
+  gparted \
+  gscan2pdf \
+  htop \
+  hyperfine \
+  inkscape \
+  jq \
+  just \
+  lazygit \
+  libva-utils \
+  libreoffice \
+  libreoffice-gtk3 \
+  meld \
+  mpv \
+  ncdu \
+  okular \
+  pandoc \
+  poppler-tools \
+  rclone \
+  resvg \
+  ripgrep \
+  screenkey \
+  ShellCheck \
+  socat \
+  sqlitebrowser \
+  taskwarrior \
+  tealdeer \
+  timewarrior \
+  tmux \
+  tokei \
+  transmission-gtk \
+  trivy \
+  xclip \
+  xiphos \
+  xournalpp \
+  yazi \
+  yazi-zsh-completion \
+  yq \
+  yt-dlp \
+  zathura \
+  zathura-plugin-pdf-poppler \
+  zathura-zsh-completion \
+  zoxide \
+  zsh
 
 # PDF backend (2026-06-01): use zathura-plugin-pdf-poppler, NOT
 # zathura-plugin-pdf-mupdf. The mupdf plugin (2026.05.10) broke on Tumbleweed
@@ -180,50 +181,50 @@ sudo zypper in -y \
 # Explicitly switch them to Packman builds after the fact.
 log "Switching ffmpeg libs to Packman builds (HEVC/codec support)..."
 sudo zypper in -y --from packman \
-    libavcodec62 \
-    libavdevice62 \
-    libavfilter11 \
-    libavformat62 \
-    libavutil60 \
-    libswresample6 \
-    libswscale9
+  libavcodec62 \
+  libavdevice62 \
+  libavfilter11 \
+  libavformat62 \
+  libavutil60 \
+  libswresample6 \
+  libswscale9
 
 # gpu-screen-recorder (build from source)
 # The openSUSE package is patched to hide H264/HEVC support, so we build from
 # upstream source against Packman's ffmpeg-7 to get proper codec detection via VA-API.
 log "Installing gpu-screen-recorder build dependencies..."
 sudo zypper in -y --from packman \
-    ffmpeg-7-libavcodec-devel \
-    ffmpeg-7-libavformat-devel \
-    ffmpeg-7-libavutil-devel \
-    ffmpeg-7-libswresample-devel \
-    ffmpeg-7-libavfilter-devel
+  ffmpeg-7-libavcodec-devel \
+  ffmpeg-7-libavformat-devel \
+  ffmpeg-7-libavutil-devel \
+  ffmpeg-7-libswresample-devel \
+  ffmpeg-7-libavfilter-devel
 
 sudo zypper in -y \
-    meson \
-    libXcomposite-devel \
-    libXrandr-devel \
-    libXfixes-devel \
-    libXdamage-devel \
-    libva-devel \
-    libcap-devel \
-    libcap-progs \
-    vulkan-headers \
-    pipewire-devel \
-    libpulse-devel
+  meson \
+  libXcomposite-devel \
+  libXrandr-devel \
+  libXfixes-devel \
+  libXdamage-devel \
+  libva-devel \
+  libcap-devel \
+  libcap-progs \
+  vulkan-headers \
+  pipewire-devel \
+  libpulse-devel
 
 log "Building and installing gpu-screen-recorder from source..."
 GSR_REPO="https://repo.dec05eba.com/gpu-screen-recorder"
 GSR_BUILD_DIR="$(mktemp -d)"
 git clone "$GSR_REPO" "$GSR_BUILD_DIR/gpu-screen-recorder"
 (
-    cd "$GSR_BUILD_DIR/gpu-screen-recorder" || exit
-    LATEST_TAG=$(git describe --tags "$(git rev-list --tags --max-count=1)")
-    git checkout "$LATEST_TAG"
-    meson setup --prefix=/usr --buildtype=release "$GSR_BUILD_DIR/build"
-    ninja -C "$GSR_BUILD_DIR/build"
-    sudo ninja -C "$GSR_BUILD_DIR/build" install
-    sudo setcap cap_sys_admin+ep /usr/bin/gsr-kms-server
+  cd "$GSR_BUILD_DIR/gpu-screen-recorder" || exit
+  LATEST_TAG=$(git describe --tags "$(git rev-list --tags --max-count=1)")
+  git checkout "$LATEST_TAG"
+  meson setup --prefix=/usr --buildtype=release "$GSR_BUILD_DIR/build"
+  ninja -C "$GSR_BUILD_DIR/build"
+  sudo ninja -C "$GSR_BUILD_DIR/build" install
+  sudo setcap cap_sys_admin+ep /usr/bin/gsr-kms-server
 )
 rm -rf "$GSR_BUILD_DIR"
 
@@ -231,11 +232,11 @@ rm -rf "$GSR_BUILD_DIR"
 # Requires nightly Rust; toolchain is installed temporarily and removed after build.
 log "Installing SwayOSD build dependencies..."
 sudo zypper in -y \
-    sassc \
-    libadwaita-devel \
-    gtk4-layer-shell-devel \
-    libgtk4-layer-shell0 \
-    libevdev-devel
+  sassc \
+  libadwaita-devel \
+  gtk4-layer-shell-devel \
+  libgtk4-layer-shell0 \
+  libevdev-devel
 
 log "Installing nightly Rust toolchain (required by SwayOSD)..."
 rustup toolchain install nightly
@@ -244,13 +245,13 @@ log "Building and installing SwayOSD from source..."
 SWAYOSD_BUILD_DIR="$(mktemp -d)"
 git clone https://github.com/ErikReider/SwayOSD "$SWAYOSD_BUILD_DIR/swayosd"
 (
-    cd "$SWAYOSD_BUILD_DIR/swayosd" || exit
-    LATEST_TAG=$(git describe --tags "$(git rev-list --tags --max-count=1)")
-    git checkout "$LATEST_TAG"
-    PATH="$HOME/.cargo/bin:$PATH" meson setup --prefix=/usr --buildtype=release "$SWAYOSD_BUILD_DIR/build"
-    ninja -C "$SWAYOSD_BUILD_DIR/build"
-    sudo env PATH="$PATH" ninja -C "$SWAYOSD_BUILD_DIR/build" install
-    sudo usermod -aG video "$USER"
+  cd "$SWAYOSD_BUILD_DIR/swayosd" || exit
+  LATEST_TAG=$(git describe --tags "$(git rev-list --tags --max-count=1)")
+  git checkout "$LATEST_TAG"
+  PATH="$HOME/.cargo/bin:$PATH" meson setup --prefix=/usr --buildtype=release "$SWAYOSD_BUILD_DIR/build"
+  ninja -C "$SWAYOSD_BUILD_DIR/build"
+  sudo env PATH="$PATH" ninja -C "$SWAYOSD_BUILD_DIR/build" install
+  sudo usermod -aG video "$USER"
 )
 rm -rf "$SWAYOSD_BUILD_DIR"
 
@@ -263,16 +264,22 @@ log "Configuring git with git-delta..."
 git config --global core.pager delta
 git config --global interactive.diffFilter 'delta --color-only'
 git config --global delta.navigate true
-git config --global delta.dark true  # or `delta.light true`, or omit for auto-detection
+git config --global delta.dark true # or `delta.light true`, or omit for auto-detection
 git config --global delta.side-by-side true
 git config --global merge.conflictStyle zdiff3
+
+# difftastic as an opt-in difftool (invoked via `git difftool`) — does not
+# touch core.pager/pager.diff above, so delta/diffnav stay the defaults.
+git config --global diff.tool difftastic
+# shellcheck disable=SC2016 # $LOCAL/$REMOTE must stay unexpanded here; git expands them when it runs the tool
+git config --global difftool.difftastic.cmd 'difft "$LOCAL" "$REMOTE"'
 
 # GitHub CLI extensions
 log "Installing GitHub CLI extensions..."
 for ext in dlvhdr/gh-dash agynio/gh-pr-review; do
-    if ! gh extension list 2>/dev/null | grep -q "$(basename "$ext")"; then
-        gh extension install "$ext"
-    fi
+  if ! gh extension list 2>/dev/null | grep -q "$(basename "$ext")"; then
+    gh extension install "$ext"
+  fi
 done
 
 # Docker
@@ -285,8 +292,8 @@ sudo usermod -aG docker "$USER"
 log "Enabling PipeWire audio..."
 # systemctl --user enable --now pipewire-pulse
 # --user systemctl in a script running as root or early in setup can be tricky, so we wrap it:
-sudo -u "$USER" systemctl --user enable --now pipewire-pulse 2>/dev/null || \
-    info "PipeWire pulse will be enabled on next login"
+sudo -u "$USER" systemctl --user enable --now pipewire-pulse 2>/dev/null ||
+  info "PipeWire pulse will be enabled on next login"
 
 # Bluetooth
 log "Enabling Bluetooth..."
@@ -294,7 +301,7 @@ sudo systemctl enable --now bluetooth
 
 log "Configuring BlueZ..."
 sudo mkdir -p /etc/bluetooth
-sudo tee /etc/bluetooth/main.conf > /dev/null << 'EOF'
+sudo tee /etc/bluetooth/main.conf >/dev/null <<'EOF'
 [Policy]
 AutoEnable=true
 FastConnectable=true
@@ -357,23 +364,23 @@ rm -f /tmp/bruno.rpm
 log "Patching Bruno desktop entry for Wayland..."
 mkdir -p "$HOME/.local/share/applications"
 sed 's|Exec=/opt/Bruno/bruno %U|Exec=/opt/Bruno/bruno --ozone-platform=wayland %U|' \
-    /usr/share/applications/bruno.desktop \
-    > "$HOME/.local/share/applications/bruno.desktop"
+  /usr/share/applications/bruno.desktop \
+  >"$HOME/.local/share/applications/bruno.desktop"
 
 # Communication tools
 install_slack() {
-    log "Starting Slack installation..."
-    local download_url
-    download_url=$(curl -sL "https://slack.com/downloads/instructions/linux?ddl=1&build=rpm" | grep -o 'https://downloads.slack-edge.com[^"]*\.rpm' | head -1)
-    if [ -z "$download_url" ]; then
-        error "Could not find Slack download URL"
-        return 1
-    fi
-    info "Downloading Slack RPM package..."
-    if curl -L -o "/tmp/slack.rpm" "$download_url"; then
-        sudo zypper in --allow-unsigned-rpm -y /tmp/slack.rpm
-        rm -f /tmp/slack.rpm
-        log "Slack installed successfully"
-    fi
+  log "Starting Slack installation..."
+  local download_url
+  download_url=$(curl -sL "https://slack.com/downloads/instructions/linux?ddl=1&build=rpm" | grep -o 'https://downloads.slack-edge.com[^"]*\.rpm' | head -1)
+  if [ -z "$download_url" ]; then
+    error "Could not find Slack download URL"
+    return 1
+  fi
+  info "Downloading Slack RPM package..."
+  if curl -L -o "/tmp/slack.rpm" "$download_url"; then
+    sudo zypper in --allow-unsigned-rpm -y /tmp/slack.rpm
+    rm -f /tmp/slack.rpm
+    log "Slack installed successfully"
+  fi
 }
 install_slack
