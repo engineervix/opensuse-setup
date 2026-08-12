@@ -323,6 +323,68 @@ sudo firewall-cmd --reload
 # under [server] in /etc/avahi/avahi-daemon.conf, then restart avahi-daemon.
 # Find your interface name with: ip link show
 
+# ActivityWatch (via the awatcher bundle: https://github.com/2e3s/awatcher)
+#
+# No openSUSE/Packman package exists, so this installs the upstream release
+# binary directly. We use the "bundle" build (self-contained aw-server-rust +
+# watcher + tray, one binary) rather than the official aw-qt/AppImage
+# distribution — the official Linux AppImage/Flatpak can't query Wayland
+# activity at all, so on Hyprland (Wayland-only) its bundled
+# aw-watcher-window/aw-watcher-afk never see real window or idle data.
+# awatcher supports Hyprland directly via the wlr-foreign-toplevel-management
+# and ext-idle-notify-v1 Wayland protocols — verified working on this setup.
+log "Installing ActivityWatch (awatcher bundle)..."
+AW_BIN_DIR="$HOME/.local/bin"
+AW_BIN_PATH="$AW_BIN_DIR/awatcher"
+AW_VERSION_MARKER="$AW_BIN_DIR/.awatcher.version"
+AW_UNIT_DIR="$HOME/.config/systemd/user"
+AW_UNIT_PATH="$AW_UNIT_DIR/awatcher.service"
+
+AW_VERSION=$(curl -s https://api.github.com/repos/2e3s/awatcher/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+if [[ -x "$AW_BIN_PATH" ]] && [[ "$(cat "$AW_VERSION_MARKER" 2>/dev/null || true)" == "$AW_VERSION" ]]; then
+  info "awatcher $AW_VERSION already installed, skipping download."
+else
+  mkdir -p "$AW_BIN_DIR"
+  AW_EXTRACT_DIR="$(mktemp -d)"
+  curl -fL -o "$AW_EXTRACT_DIR/awatcher-bundle.zip" \
+    "https://github.com/2e3s/awatcher/releases/download/${AW_VERSION}/awatcher-bundle.zip"
+  unzip -q "$AW_EXTRACT_DIR/awatcher-bundle.zip" -d "$AW_EXTRACT_DIR"
+  install -m 755 "$AW_EXTRACT_DIR/awatcher" "$AW_BIN_PATH"
+  echo "$AW_VERSION" >"$AW_VERSION_MARKER"
+  rm -rf "$AW_EXTRACT_DIR"
+fi
+
+log "Installing awatcher systemd --user unit..."
+mkdir -p "$AW_UNIT_DIR"
+cat >"$AW_UNIT_PATH" <<EOF
+[Unit]
+Description=ActivityWatch (awatcher bundle)
+After=graphical-session.target
+
+[Service]
+Type=simple
+TimeoutStartSec=120
+ExecStartPre=/bin/sleep 5
+ExecStart=$AW_BIN_PATH
+Restart=always
+RestartSec=5
+RestartSteps=2
+RestartMaxDelaySec=15
+
+[Install]
+WantedBy=graphical-session.target
+EOF
+
+# This repo's Hyprland config doesn't activate graphical-session.target (no
+# uwsm, no hyprland-session.target shim), so the [Install] section above is
+# inert here — `systemctl --user enable` would never actually get pulled in.
+# Autostart instead comes from dotfiles: autostart.lua runs
+# `systemctl --user start awatcher.service` directly on hyprland.start.
+sudo -u "$USER" systemctl --user daemon-reload 2>/dev/null ||
+  info "Run 'systemctl --user daemon-reload' manually on next login."
+sudo -u "$USER" systemctl --user start awatcher.service 2>/dev/null ||
+  info "awatcher.service will start on next login via autostart.lua."
+
 # Browsers
 log "Installing Browsers..."
 sudo zypper in -y chromium
