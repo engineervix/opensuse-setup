@@ -134,6 +134,7 @@ sudo zypper in -y \
   libreoffice \
   libreoffice-gtk3 \
   meld \
+  mercurial \
   mpv \
   ncdu \
   okular \
