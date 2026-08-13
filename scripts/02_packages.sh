@@ -92,6 +92,8 @@ sudo zypper in -y \
 # Essential Tools
 log "Installing utilities and applications..."
 sudo zypper in -y \
+  atop \
+  atop-daemon \
   audacity \
   avahi \
   avahi-utils \
@@ -325,6 +327,13 @@ sudo firewall-cmd --reload
 # interface (e.g. Docker bridges, Tailscale). Fix: add allow-interfaces=<iface>
 # under [server] in /etc/avahi/avahi-daemon.conf, then restart avahi-daemon.
 # Find your interface name with: ip link show
+
+# atop (historical per-process CPU/mem/disk logging: https://github.com/Atoptool/atop)
+# atop-daemon subpackage ships the atop.service unit; the base atop package
+# only has the binaries.
+# Default config logs to /var/log/atop every 10 min, keeps 28 days.
+log "Enabling atop persistent logging..."
+sudo systemctl enable --now atop.service
 
 # ActivityWatch (via the awatcher bundle: https://github.com/2e3s/awatcher)
 #
