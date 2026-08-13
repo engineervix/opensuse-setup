@@ -289,6 +289,9 @@ sudo zypper in -y docker docker-compose
 sudo systemctl enable --now docker
 sudo usermod -aG docker "$USER"
 
+# Shared network for the local dev reverse proxy (see dotfiles: .config/traefik/)
+docker network create traefik 2>/dev/null || true
+
 # Enable PipeWire
 log "Enabling PipeWire audio..."
 # systemctl --user enable --now pipewire-pulse
