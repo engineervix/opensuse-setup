@@ -367,6 +367,26 @@ else
   rm -rf "$AW_EXTRACT_DIR"
 fi
 
+log "Configuring awatcher app-id filters..."
+AW_CONFIG_DIR="$HOME/.config/awatcher"
+AW_CONFIG_PATH="$AW_CONFIG_DIR/config.toml"
+mkdir -p "$AW_CONFIG_DIR"
+touch "$AW_CONFIG_PATH"
+# awatcher's window watcher reports Google Chrome's app-id as bare
+# "google-chrome", which isn't in aw-webui's hardcoded browser_appnames.chrome
+# list (it has "google-chrome-stable" and "Google-chrome" but not this exact
+# string) — so the web UI's Browser view domain/URL breakdown silently comes
+# up empty even though the browser extension is capturing data correctly.
+# Rename the app-id at the source to a variant aw-webui recognizes.
+if ! grep -q 'match-app-id = "google-chrome"' "$AW_CONFIG_PATH"; then
+  cat >>"$AW_CONFIG_PATH" <<'EOF'
+
+[[awatcher.filters]]
+match-app-id = "google-chrome"
+replace-app-id = "Google-chrome"
+EOF
+fi
+
 log "Installing awatcher systemd --user unit..."
 mkdir -p "$AW_UNIT_DIR"
 cat >"$AW_UNIT_PATH" <<EOF
