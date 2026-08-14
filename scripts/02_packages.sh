@@ -400,7 +400,13 @@ sudo -u "$USER" systemctl --user start awatcher.service 2>/dev/null ||
 
 # Browsers
 log "Installing Browsers..."
-sudo zypper in -y chromium
+
+# ungoogled-chromium (replaces stock chromium; same binary/.desktop names,
+# so no changes needed elsewhere for the chromium alias or menu entry)
+sudo zypper rr network:chromium 2>/dev/null || true
+sudo zypper ar -f https://download.opensuse.org/repositories/network:chromium/openSUSE_Tumbleweed/network:chromium.repo
+sudo zypper ref
+sudo zypper in -y ungoogled-chromium
 
 # Google Chrome
 sudo rpm --import https://dl-ssl.google.com/linux/linux_signing_key.pub
