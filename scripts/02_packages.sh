@@ -148,6 +148,7 @@ sudo zypper in -y \
   screenkey \
   ShellCheck \
   socat \
+  sqlite3 \
   sqlitebrowser \
   taskwarrior \
   tealdeer \
