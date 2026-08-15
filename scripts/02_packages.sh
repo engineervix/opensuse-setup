@@ -75,6 +75,7 @@ sudo zypper in -y \
   ncurses-devel \
   libopenssl-devel \
   libstdc++-devel \
+  libc++-devel \
   mkcert \
   patchelf \
   python3-devel \
