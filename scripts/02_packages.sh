@@ -62,6 +62,7 @@ sudo zypper in -y \
   expat \
   libexpat-devel \
   gdbm-devel \
+  gcovr \
   git-lfs \
   gstreamer-devel \
   gstreamer-plugins-base-devel \
