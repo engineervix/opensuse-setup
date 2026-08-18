@@ -280,6 +280,15 @@ git config --global diff.tool difftastic
 # shellcheck disable=SC2016 # $LOCAL/$REMOTE must stay unexpanded here; git expands them when it runs the tool
 git config --global difftool.difftastic.cmd 'difft "$LOCAL" "$REMOTE"'
 
+# hunk (https://hunk.dev) as opt-in aliases — same reasoning as difftastic
+# above, so delta/diffnav keep core.pager/pager.diff. Use `git hdiff`/`git
+# hshow` when you want hunk's review UI (sidebar, inline Claude Code notes)
+# instead of the plain pager.
+# shellcheck disable=SC2016 # kept unexpanded; passed through to `-c` as a literal git config value
+git config --global alias.hdiff '-c core.pager="hunk pager" diff'
+# shellcheck disable=SC2016 # kept unexpanded; passed through to `-c` as a literal git config value
+git config --global alias.hshow '-c core.pager="hunk pager" show'
+
 # GitHub CLI extensions
 log "Installing GitHub CLI extensions..."
 for ext in dlvhdr/gh-dash agynio/gh-pr-review; do
