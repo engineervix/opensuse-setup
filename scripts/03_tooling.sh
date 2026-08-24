@@ -147,6 +147,16 @@ if ! command -v presenterm &>/dev/null; then
     tar -xz --strip-components=1 -C "$HOME/bin" "presenterm-${PRESENTERM_VERSION}-x86_64-unknown-linux-musl/presenterm"
 fi
 
+# nb (plain-text notes, bookmarks, and todos, git-backed - single-script CLI)
+log "Installing nb..."
+if ! command -v nb &>/dev/null; then
+  NB_VERSION=$(curl -s https://api.github.com/repos/xwmx/nb/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
+  mkdir -p "$HOME/.local/bin" "$HOME/.zfunc"
+  curl -fsSL "https://github.com/xwmx/nb/releases/download/${NB_VERSION}/nb" -o "$HOME/.local/bin/nb"
+  chmod +x "$HOME/.local/bin/nb"
+  curl -fsSL "https://raw.githubusercontent.com/xwmx/nb/${NB_VERSION}/etc/nb-completion.zsh" -o "$HOME/.zfunc/_nb"
+fi
+
 # Terraform
 log "Installing Terraform..."
 if ! command -v terraform &>/dev/null; then
