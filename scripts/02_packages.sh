@@ -141,6 +141,7 @@ sudo zypper in -y \
   mercurial \
   mpv \
   ncdu \
+  nmap \
   okular \
   pandoc \
   poppler-tools \
@@ -150,15 +151,19 @@ sudo zypper in -y \
   screenkey \
   ShellCheck \
   socat \
+  socat-extra \
   sqlite3 \
   sqlitebrowser \
   taskwarrior \
   tealdeer \
+  tig \
+  tig-zsh-completion \
   timewarrior \
   tmux \
   tokei \
   transmission-gtk \
   trivy \
+  w3m \
   xclip \
   xiphos \
   xournalpp \
