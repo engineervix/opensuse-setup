@@ -294,6 +294,28 @@ rustup toolchain install 1.95.0
 log "Building and installing Satty..."
 cargo +1.95.0 install satty --locked
 
+# pass (password-store) - built from a personal fork instead of the zypper
+# package. Upstream's clip() copies secrets via plain wl-copy, which leaks
+# into cliphist's plaintext history (cliphist skips storage only when told
+# the content is sensitive). The fork adds --sensitive to wl-copy on
+# Wayland; not yet submitted upstream. See engineervix/password-store and
+# password-store-clipboard-fix.md in the dotfiles repo for the full story.
+log "Installing pass build/runtime dependencies..."
+sudo zypper in -y \
+  gpg2 \
+  tree \
+  qrencode \
+  bash-completion
+
+log "Building and installing pass (password-store) from personal fork..."
+PASS_BUILD_DIR="$(mktemp -d)"
+git clone https://github.com/engineervix/password-store "$PASS_BUILD_DIR"
+(
+  cd "$PASS_BUILD_DIR" || exit
+  sudo make install
+)
+rm -rf "$PASS_BUILD_DIR"
+
 # Configure git to use git-delta
 # https://github.com/dandavison/delta
 log "Configuring git with git-delta..."
