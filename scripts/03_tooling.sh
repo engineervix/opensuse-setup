@@ -110,13 +110,8 @@ git clone https://github.com/dlvhdr/diffnav "$DIFFNAV_BUILD_DIR"
 rm -rf "$DIFFNAV_BUILD_DIR"
 git config --global pager.diff diffnav
 
-# Rust
+# Rust ecosystem (rustup itself is installed earlier, in 02_packages.sh)
 log "Installing Rust ecosystem..."
-if ! command -v rustc &>/dev/null; then
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-fi
-# Ensure cargo is available in this session
-source "$HOME/.cargo/env"
 # We need this for the Neovim setup
 if ! command -v tree-sitter &>/dev/null; then
   cargo install tree-sitter-cli

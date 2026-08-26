@@ -6,6 +6,15 @@
 
 log "--- [Phase 2: Package Installation] ---"
 
+# Rust. Installed here (rather than in 03_tooling.sh, which normally owns dev
+# tooling) because the SwayOSD and Satty builds below need it and this phase
+# runs first; 03_tooling.sh reuses this same install.
+if ! command -v rustup &>/dev/null; then
+  log "Installing rustup..."
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+fi
+source "$HOME/.cargo/env"
+
 # Core Hyprland Desktop Environment
 log "Configuring Packman repository for multimedia codecs..."
 sudo zypper ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/ packman || true
@@ -268,6 +277,21 @@ rm -rf "$SWAYOSD_BUILD_DIR"
 
 log "Removing nightly Rust toolchain..."
 rustup toolchain uninstall nightly
+
+# Satty (screenshot annotation - not in openSUSE repos)
+# Needs if-let match guards in a match arm, stabilized in Rust 1.95; rustup's
+# "stable" channel can lag behind, so pin the toolchain for this build only.
+log "Installing Satty build dependencies..."
+sudo zypper in -y \
+  gtk4-devel \
+  fontconfig-devel \
+  libepoxy-devel
+
+log "Installing Rust 1.95.0 toolchain (required by Satty)..."
+rustup toolchain install 1.95.0
+
+log "Building and installing Satty..."
+cargo +1.95.0 install satty --locked
 
 # Configure git to use git-delta
 # https://github.com/dandavison/delta
