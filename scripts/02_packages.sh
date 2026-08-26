@@ -153,6 +153,7 @@ sudo zypper in -y \
   nmap \
   okular \
   pandoc \
+  pinentry-qt6 \
   poppler-tools \
   rclone \
   resvg \
