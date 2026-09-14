@@ -200,12 +200,12 @@ sudo zypper in -y \
 # ImageMagick-extra (extra delegate support) isn't in the main repo; pull it
 # from the graphics project repo. openjpeg2 (JPEG2000) is already in the main
 # repo, but the graphics repo carries a newer build, so it wins by version
-# once the repo is added.
+# once the repo is added. Same goes for graphviz
 log "Configuring graphics repository for ImageMagick-extra..."
 sudo zypper rr graphics 2>/dev/null || true
 sudo zypper ar -f https://download.opensuse.org/repositories/graphics/openSUSE_Tumbleweed/graphics.repo
 sudo zypper ref
-sudo zypper in -y ImageMagick-extra openjpeg2
+sudo zypper in -y ImageMagick-extra openjpeg2 graphviz
 
 # ffmpeg libs: OSS builds lack HEVC/H.264 (patent-encumbered). Installing ffmpeg
 # from the essential tools block above pulls in OSS libavcodec62 and siblings.
