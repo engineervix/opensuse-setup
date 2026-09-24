@@ -43,3 +43,8 @@ gtk-application-prefer-dark-theme=1
 gtk-theme-name=Adwaita-dark
 EOF
 done
+
+# Thunar deletes straight to trash with no confirmation by default; ask first
+# to avoid an accidental Delete keypress silently trashing files.
+log "Enabling Thunar move-to-trash confirmation..."
+xfconf-query --channel thunar --create --type bool --property /misc-confirm-move-to-trash --set true
