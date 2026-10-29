@@ -21,6 +21,12 @@ sudo zypper ar -cfp 90 https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_
 sudo zypper --gpg-auto-import-keys ref
 sudo zypper dup --from packman --allow-vendor-change -y
 
+# VLC 3's Qt GUI needs an X display and there is no Xwayland here, so mpv is the
+# video player. Packman keeps upgrading VLC if it is installed, and weak deps
+# (e.g. phonon-vlc) can bring it in.
+log "Locking VLC out..."
+sudo zypper addlock vlc vlc-qt || true
+
 log "Installing Hyprland ecosystem components..."
 sudo zypper in -y \
   hyprland \
