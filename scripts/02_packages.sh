@@ -504,6 +504,9 @@ log "Installing Browsers..."
 # so no changes needed elsewhere for the chromium alias or menu entry)
 sudo zypper rr network:chromium 2>/dev/null || true
 sudo zypper ar -f https://download.opensuse.org/repositories/network:chromium/openSUSE_Tumbleweed/network:chromium.repo
+# OBS renews this key's expiry in place (same key ID), and zypper won't re-import
+# a key ID it already has, so a stale expired copy breaks installs until re-imported
+sudo rpm --import https://download.opensuse.org/repositories/network:/chromium/openSUSE_Tumbleweed/repodata/repomd.xml.key
 sudo zypper ref
 sudo zypper in -y ungoogled-chromium
 
