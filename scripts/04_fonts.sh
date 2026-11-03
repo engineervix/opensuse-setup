@@ -36,5 +36,14 @@ if [ ! -f "$HOME/.local/share/fonts/CaskaydiaCodeNerdFont-Regular.ttf" ]; then
     rm -rf /tmp/CascadiaCode*
 fi
 
+# Maple Mono (NF, unhinted — upstream release, not from nerd-fonts)
+if [ ! -f "$HOME/.local/share/fonts/MapleMono-NF-Regular.ttf" ]; then
+    info "Downloading Maple Mono NF..."
+    wget -qO /tmp/MapleMono.zip https://github.com/subframe7536/maple-font/releases/latest/download/MapleMono-NF-unhinted.zip
+    unzip -q /tmp/MapleMono.zip '*.ttf' -d /tmp/MapleMono/
+    cp /tmp/MapleMono/*.ttf "$HOME/.local/share/fonts/"
+    rm -rf /tmp/MapleMono*
+fi
+
 log "Refreshing font cache..."
 fc-cache -fv
