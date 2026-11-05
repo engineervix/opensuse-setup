@@ -21,8 +21,9 @@ fi
 log "Installing Node.js development tools..."
 if ! volta list 2>/dev/null | grep -q 'prettier'; then
   volta install \
-    @google/gemini-cli \
+    @apollo/rover \
     @marp-team/marp-cli \
+    @vtsls/language-server \
     ccusage \
     commit-and-tag-version \
     doctoc \
@@ -31,9 +32,11 @@ if ! volta list 2>/dev/null | grep -q 'prettier'; then
     gitlab-ci-local \
     hunkdiff \
     heroku \
+    jscpd \
     mdpdf \
     neovim \
     pa11y \
+    pnpm \
     prettier \
     pyright \
     serve \

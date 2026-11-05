@@ -23,10 +23,10 @@ The setup translates Fedora's `dnf groups` into openSUSE `patterns` and installs
 
 - **Build Essentials:** Installed via `devel_basis` and `devel_C_C++` patterns (includes `gcc`, `make`, `cmake`, `gdb`).
 - **Node.js:** Managed by **Volta**. Includes global installs of:
-  - `@google/gemini-cli`, `@marp-team/marp-cli`
+  - `@apollo/rover`, `@marp-team/marp-cli`, `@vtsls/language-server`
   - `ccusage`, `commit-and-tag-version`, `doctoc`
   - `eslint`, `eslint-config-prettier`, `stylelint`
-  - `gitlab-ci-local`, `pa11y`
+  - `gitlab-ci-local`, `hunkdiff`, `jscpd`, `pa11y`, `pnpm`
   - `mdpdf`, `prettier`, `svgo`, `serve`
   - `neovim` (for node host support), `pyright`, `typescript`.
 - **Python:** Managed by **pyenv**. Includes **Poetry** (with Zsh completions) and `virtualenvwrapper`.
