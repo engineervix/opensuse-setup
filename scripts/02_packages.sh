@@ -210,7 +210,10 @@ log "Configuring graphics repository for ImageMagick-extra..."
 sudo zypper rr graphics 2>/dev/null || true
 sudo zypper ar -f https://download.opensuse.org/repositories/graphics/openSUSE_Tumbleweed/graphics.repo
 sudo zypper ref
-sudo zypper in -y ImageMagick-extra openjpeg2 graphviz chafa
+# --allow-vendor-change: graphics builds a newer ImageMagick than the main repo,
+# and ImageMagick-extra pins its exact version, so the whole stack must switch
+# vendor together or the solver deadlocks.
+sudo zypper in -y --allow-vendor-change ImageMagick-extra openjpeg2 graphviz chafa
 
 # ffmpeg libs: OSS builds lack HEVC/H.264 (patent-encumbered). Installing ffmpeg
 # from the essential tools block above pulls in OSS libavcodec62 and siblings.
