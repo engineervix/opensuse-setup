@@ -67,6 +67,7 @@ echo
 warn "IMPORTANT: A reboot is required to fully apply group changes (Docker) and start your new graphical session."
 info "After reboot, select 'Hyprland' from your login manager (SDDM) or launch it from the TTY."
 warn "For restricted multimedia codecs (H.264, AAC, etc.), run 'sudo opi codecs' after rebooting."
+info "If gpu-screen-recorder breaks after a Packman ffmpeg update, run '${SCRIPT_DIR}/scripts/rebuild-gpu-screen-recorder.sh'."
 warn "SELinux & Docker volumes: If containers can't access mounted volumes, run 'chcon -R -t container_file_t .' in the project directory"
 info "Optional: build LocalSend from source with '${SCRIPT_DIR}/scripts/localsend-build.sh' (slow first run)."
 echo

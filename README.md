@@ -37,6 +37,7 @@ The script is interactive — it prompts for hostname, Git identity, and (in the
 ## Post-Installation
 1. **Spotify:** Run `spotify-easyrpm` to complete the Spotify installation.
 2. **Reboot:** Essential to finalize group permissions (Docker) and start your Hyprland session via SDDM.
+3. **gpu-screen-recorder:** If it fails with `version LIBAVFILTER_X.Y_SUSE not found` after a Packman ffmpeg update, run `scripts/rebuild-gpu-screen-recorder.sh`.
 
 ## Optional: LocalSend
 
