@@ -10,8 +10,13 @@ log "--- [Phase 5: Terminal Configuration] ---"
 # Carapace (multi-shell completion engine)
 log "Installing Carapace..."
 if ! command -v carapace &> /dev/null; then
-    sudo zypper ar --gpgcheck-allow-unsigned -f https://yum.fury.io/rsteube/ carapace || true
-    sudo zypper --gpg-auto-import-keys refresh carapace
+    # Served key lacks a trailing newline, which rpm rejects
+    key=$(mktemp)
+    { curl -fsSL https://yum.fury.io/rsteube/gpg.key; echo; } > "$key"
+    sudo rpm --import "$key"
+    rm -f "$key"
+    sudo zypper ar -f https://yum.fury.io/rsteube/ carapace || true
+    sudo zypper refresh carapace
     sudo zypper in -y carapace-bin
 fi
 
