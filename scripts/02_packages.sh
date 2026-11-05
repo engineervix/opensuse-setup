@@ -50,7 +50,6 @@ sudo zypper in -y \
   slurp \
   pipewire \
   pipewire-pulseaudio \
-  pipewire-aptx \
   wireplumber \
   pavucontrol \
   qt6-wayland \
