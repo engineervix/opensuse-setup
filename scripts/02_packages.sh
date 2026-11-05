@@ -142,6 +142,7 @@ sudo zypper in -y \
   glab \
   gparted \
   gscan2pdf \
+  gtypist \
   htop \
   hyperfine \
   inkscape \

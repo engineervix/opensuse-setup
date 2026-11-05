@@ -83,6 +83,7 @@ The script installs a comprehensive suite of modern and essential tools:
   - Transmission-GTK for BitTorrent.
   - Screenkey for screencasts.
   - DB Browser for SQLite.
+  - `gtypist` for touch-typing practice in the terminal.
   - `htop`, `btop` for live monitoring; `atop` + `atop-daemon` for historical per-process CPU/mem/disk logging (`atop.service` enabled, logs to `/var/log/atop` every 10 min, 28-day retention — see [atoptool/atop](https://github.com/Atoptool/atop)).
 - **API Client:** Bruno (Native RPM from official GitHub).
 
