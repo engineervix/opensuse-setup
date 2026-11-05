@@ -29,7 +29,7 @@ if ! volta list 2>/dev/null | grep -q 'prettier'; then
     eslint \
     eslint-config-prettier \
     gitlab-ci-local \
-    hunk \
+    hunkdiff \
     heroku \
     mdpdf \
     neovim \
