@@ -38,6 +38,16 @@ The script is interactive — it prompts for hostname, Git identity, and (in the
 1. **Spotify:** Run `spotify-easyrpm` to complete the Spotify installation.
 2. **Reboot:** Essential to finalize group permissions (Docker) and start your Hyprland session via SDDM.
 
+## Optional: LocalSend
+
+No openSUSE package exists, so build it from source (slow first run, not part of `install.sh`):
+
+```bash
+scripts/localsend-build.sh
+```
+
+Re-run to upgrade to the latest release tag. The installed `localsend` is a wrapper that opens port 53317 (TCP+UDP, runtime only) via `firewall-cmd` while the app runs and closes it on exit. polkit prompts for your password on launch.
+
 ## References
 - [Official openSUSE Documentation](https://en.opensuse.org/Main_Page)
 - [Hyprland Wiki](https://wiki.hyprland.org/)
