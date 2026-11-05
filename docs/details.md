@@ -22,13 +22,15 @@ Unlike GNOME's "all-in-one" approach, this setup uses modular Wayland components
 The setup translates Fedora's `dnf groups` into openSUSE `patterns` and installs specific version managers.
 
 - **Build Essentials:** Installed via `devel_basis` and `devel_C_C++` patterns (includes `gcc`, `make`, `cmake`, `gdb`).
-- **Node.js:** Managed by **Volta**. Includes global installs of:
+- **Node.js:** Managed by **Vite+** (`vp`), which replaced the unmaintained Volta. It downloads Node.js (latest LTS by default) and the package managers (npm, pnpm, yarn, bun) on first use, and pins each global CLI to the Node LTS it was installed with. Includes global installs (`vp install -g --node lts`) of:
   - `@apollo/rover`, `@marp-team/marp-cli`, `@vtsls/language-server`
   - `ccusage`, `commit-and-tag-version`, `doctoc`
   - `eslint`, `eslint-config-prettier`, `stylelint`
-  - `gitlab-ci-local`, `hunkdiff`, `jscpd`, `pa11y`, `pnpm`
+  - `gitlab-ci-local`, `heroku` (the Heroku CLI, see Cloud below), `hunkdiff`, `jscpd`, `pa11y`
   - `mdpdf`, `prettier`, `svgo`, `serve`
   - `neovim` (for node host support), `pyright`, `typescript`.
+  - `pnpm` comes from Vite+'s own shim, so it is not installed as a global package.
+  - Pin a project's Node with `vp env pin <version>` (see the [`vp env` guide](https://viteplus.dev/guide/env)).
 - **Python:** Managed by **pyenv**. Includes **Poetry** (with Zsh completions) and `virtualenvwrapper`.
 - **Go:** Installed via Zypper. Includes `gopls` and `golangci-lint`.
 - **Rust:** Managed via **rustup**.

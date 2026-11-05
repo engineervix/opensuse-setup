@@ -7,43 +7,67 @@
 
 log "--- [Phase 3: Development Tooling] ---"
 
-# Node.js development tools with Volta
-log "Installing Volta for Node.js version management..."
-if ! command -v volta &>/dev/null; then
-  curl https://get.volta.sh | bash
-  export VOLTA_HOME="$HOME/.volta"
-  export PATH="$VOLTA_HOME/bin:$PATH"
-  log "Installing Node.js and npm via Volta..."
-  volta install node@lts
-  volta install npm@latest
+# Node.js development tools with Vite+ (vp), which replaces the unmaintained Volta.
+# It manages Node.js and npm/pnpm/yarn/bun, and pins each global CLI to the Node
+# LTS it was installed with.
+log "Installing Vite+ for Node.js version management..."
+if ! command -v vp &>/dev/null; then
+  vp_installer="$(mktemp)"
+  curl -fsSL https://vite.plus -o "$vp_installer"
+  # Source the installer in a subshell: it defines its own info/warn/error helpers,
+  # and when sourced it sets SHIM_DIR (where `vp` lands), which `curl | bash` loses.
+  # VP_NODE_MANAGER/VP_PM_MANAGER=yes answer its prompts so Vite+ manages Node.js and
+  # the package managers (otherwise a pnpm already on PATH would stay unmanaged).
+  vp_shim_dir="$(
+    set +o pipefail
+    export VP_NODE_MANAGER=yes VP_PM_MANAGER=yes
+    # shellcheck disable=SC1090
+    source "$vp_installer" >&2
+    printf '%s' "${SHIM_DIR:-}"
+  )"
+  rm -f "$vp_installer"
+  if [[ ! -x "$vp_shim_dir/vp" ]]; then
+    error "Vite+ installed but vp was not found in '$vp_shim_dir'"
+    exit 1
+  fi
+  export PATH="$vp_shim_dir:$PATH"
 fi
 
 log "Installing Node.js development tools..."
-if ! volta list 2>/dev/null | grep -q 'prettier'; then
-  volta install \
-    @apollo/rover \
-    @marp-team/marp-cli \
-    @vtsls/language-server \
-    ccusage \
-    commit-and-tag-version \
-    doctoc \
-    eslint \
-    eslint-config-prettier \
-    gitlab-ci-local \
-    hunkdiff \
-    heroku \
-    jscpd \
-    mdpdf \
-    neovim \
-    pa11y \
-    pnpm \
-    prettier \
-    pyright \
-    serve \
-    stylelint \
-    svgo \
-    typescript
-fi
+# pnpm is not listed: Vite+ provides its own pnpm shim and drops a global
+# package's pnpm/pnpx bins as conflicting with it.
+vp_packages=(
+  @apollo/rover
+  @marp-team/marp-cli
+  @vtsls/language-server
+  ccusage
+  commit-and-tag-version
+  doctoc
+  eslint
+  eslint-config-prettier
+  gitlab-ci-local
+  hunkdiff
+  heroku
+  jscpd
+  mdpdf
+  neovim
+  pa11y
+  prettier
+  pyright
+  serve
+  stylelint
+  svgo
+  typescript
+)
+# `vp list -g` rows look like `prettier@3.9.10  26.13.0  prettier`; keep the bare names.
+vp_installed="$(vp list -g 2>/dev/null | awk '{print $1}' | sed -n 's/@[^@]*$//p' || true)"
+for pkg in "${vp_packages[@]}"; do
+  if grep -qxF -- "$pkg" <<<"$vp_installed"; then
+    continue
+  fi
+  # --node lts resolves to the newest LTS now and pins the tool to that exact version.
+  vp install -g --node lts "$pkg"
+done
 
 # Python
 log "Installing pyenv for Python version management..."
