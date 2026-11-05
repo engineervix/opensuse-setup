@@ -122,6 +122,7 @@ sudo zypper in -y \
   cliphist \
   d2 \
   difftastic \
+  direnv \
   duf \
   engrampa \
   easyeffects \
