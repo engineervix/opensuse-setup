@@ -535,6 +535,16 @@ sudo zypper in -y brave-browser
 # shells out to apt-get, which doesn't exist here) — so install them directly.
 sudo zypper in -y icu flite
 
+# Mullvad VPN: the repo officially targets Fedora/Debian/Ubuntu, but the Fedora
+# RPM runs on Tumbleweed. Import the keyring first so zypper can verify updates.
+log "Installing Mullvad VPN..."
+sudo rpm --import https://repository.mullvad.net/rpm/mullvad-keyring.asc
+sudo zypper rr mullvad 2>/dev/null || true
+sudo zypper ar -f https://repository.mullvad.net/rpm/stable/x86_64/ mullvad
+sudo zypper ref
+sudo zypper in -y mullvad-vpn
+sudo systemctl enable --now mullvad-daemon.service mullvad-early-boot-blocking.service
+
 # Spotify (via spotify-easyrpm)
 log "Installing Spotify..."
 sudo zypper in -y spotify-easyrpm
