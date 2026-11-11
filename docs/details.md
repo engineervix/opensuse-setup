@@ -34,8 +34,20 @@ The setup translates Fedora's `dnf groups` into openSUSE `patterns` and installs
 - **Python:** Managed by **pyenv**. Includes **Poetry** (with Zsh completions) and `virtualenvwrapper`.
 - **Go:** Installed via Zypper. Includes `gopls` and `golangci-lint`.
 - **Rust:** Managed via **rustup**.
-- **Containers:** **Docker** and **Docker Compose** (enabled as a systemd service).
+- **Containers:** **rootless Docker** and **Docker Compose** (see [Rootless Docker](#rootless-docker)).
 - **Cloud:** **AWS CLI v2** and **Heroku CLI**.
+
+### Rootless Docker
+
+The Docker daemon runs as your user (`systemctl --user status docker`), so there is no `docker` group and no root-equivalent socket. The CLI uses the `rootless` context, and the socket is `$XDG_RUNTIME_DIR/docker.sock`. What differs from a rootful daemon:
+
+- **Bind mounts and uids.** Container uid 0 is your user. Other container uids map into your subordinate range (`/etc/subuid`): uid 1000 in a container is typically uid 100999 on the host, so a non-root container user may fail to write to a bind mount you own. Either run that service as `user: root` (which is you on the host), or give the mapped uid an ACL: `setfacl -R -m u:100999:rwx <dir>`.
+- **SELinux.** Containers need no `:z` or `chcon` on bind mounts. Leave `selinux-enabled` off in the rootless daemon's config: turning it on breaks `docker exec`.
+- **Ports.** `/etc/sysctl.d/90-rootless-ports.conf` lets unprivileged processes bind ports 80–1023, so a local reverse proxy can use `:80`.
+- **Dev servers on the host.** Host loopback is blocked, and `host-gateway` resolves inside the daemon's own network namespace, so neither reaches the host. `host-gateway-ip.service` adds `10.254.254.254` to `lo` instead. Map `host.docker.internal` to it with `extra_hosts`, and make the dev server listen on `0.0.0.0`, not only `127.0.0.1`.
+- **Boot.** The `ip_tables` modules load at boot from `/etc/modules-load.d/rootless-docker.conf`. The daemon starts when you log in; `loginctl enable-linger` makes it start at boot instead.
+- **Resource limits.** Only cgroup controllers delegated to your user apply, so `cpus:` and memory limits may be ignored with a warning.
+- **Old data.** Images and volumes from a previous rootful daemon are not visible to the rootless one. Dump databases before switching.
 
 ## 📝 Modern Text Editors
 
