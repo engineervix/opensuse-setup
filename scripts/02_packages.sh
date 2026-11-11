@@ -369,14 +369,61 @@ for ext in dlvhdr/gh-dash agynio/gh-pr-review; do
   fi
 done
 
-# Docker
-log "Installing Docker..."
-sudo zypper in -y docker docker-compose
-sudo systemctl enable --now docker
-sudo usermod -aG docker "$USER"
+# Docker, rootless: the daemon runs as $USER. There is no docker group and no
+# root-equivalent socket; containers reach your files through a user namespace
+# (see "Rootless Docker" in docs/details.md).
+log "Installing rootless Docker..."
+sudo zypper in -y docker docker-compose docker-rootless-extras
 
-# Shared network for the local dev reverse proxy (see dotfiles: .config/traefik/)
-docker network create traefik 2>/dev/null || true
+# dockerd-rootless-setuptool.sh refuses to run without ip_tables. Rootful Docker
+# used to load these as a side effect; now nothing does, so load them at boot.
+RL_MODULES=(ip_tables iptable_mangle iptable_nat iptable_filter)
+printf '%s\n' "${RL_MODULES[@]}" | sudo tee /etc/modules-load.d/rootless-docker.conf >/dev/null
+sudo modprobe -a "${RL_MODULES[@]}"
+
+# Let unprivileged processes bind ports 80-1023 (the dev reverse proxy binds :80).
+echo 'net.ipv4.ip_unprivileged_port_start=80' | sudo tee /etc/sysctl.d/90-rootless-ports.conf >/dev/null
+sudo sysctl -q -w net.ipv4.ip_unprivileged_port_start=80
+
+# The system daemon must not run next to the rootless one.
+sudo systemctl disable --now docker.service docker.socket 2>/dev/null || true
+
+# Rootless Docker blocks host loopback, and host-gateway resolves inside its own
+# network namespace, so containers cannot reach dev servers running on the host.
+# An address that is local to the host but outside 127/8 does work. Containers
+# reach it as host.docker.internal via extra_hosts (see dotfiles:
+# .config/traefik/). Servers must listen on 0.0.0.0, not just 127.0.0.1.
+sudo tee /etc/systemd/system/host-gateway-ip.service >/dev/null <<'EOF'
+[Unit]
+Description=Host-local address for rootless Docker containers (host.docker.internal)
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/ip addr add 10.254.254.254/32 dev lo
+ExecStop=/usr/sbin/ip addr del 10.254.254.254/32 dev lo
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl daemon-reload
+sudo systemctl enable --now host-gateway-ip.service
+
+# The user daemon needs subordinate uid/gid ranges and your systemd user session.
+if ! grep -q "^${USER}:" /etc/subuid || ! grep -q "^${USER}:" /etc/subgid; then
+  warn "No subordinate uid/gid range for $USER in /etc/subuid and /etc/subgid."
+  warn "Rootless Docker needs one: add it with 'usermod --add-subuids/--add-subgids' (pick a free range)."
+fi
+if [[ -z ${XDG_RUNTIME_DIR:-} ]]; then
+  warn "No user session (XDG_RUNTIME_DIR unset): skipping rootless daemon setup."
+  warn "From a desktop session, run: dockerd-rootless-setuptool.sh install"
+else
+  if ! systemctl --user is-active --quiet docker.service; then
+    dockerd-rootless-setuptool.sh install
+  fi
+  # Shared network for the local dev reverse proxy (see dotfiles: .config/traefik/)
+  docker network create traefik 2>/dev/null || true
+fi
 
 # Enable PipeWire
 log "Enabling PipeWire audio..."
